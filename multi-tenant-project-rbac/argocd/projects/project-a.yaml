@@ -17,7 +17,6 @@ spec:
     kind: '*'
   roles:
   - name: project-a-role
-    description: Allow syncing dev and pilot apps from group pilot and prod groups
     policies:
       - p, proj:project-a:project-a-role, applications, get, project-a/*, allow
       - p, proj:project-a:project-a-role, applications, sync, project-a/*, allow
