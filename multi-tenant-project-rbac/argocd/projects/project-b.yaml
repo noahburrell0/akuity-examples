@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: project-b
+  namespace: argocd
+spec:
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: '*'
+    server: '*'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+    namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  roles:
+  - name: project-b-role
+    policies:
+      - p, proj:project-b:project-b-role, applications, get, project-b/*, allow
+      - p, proj:project-b:project-b-role, applications, sync, project-b/*, allow
+    groups:
+      - example-group-b

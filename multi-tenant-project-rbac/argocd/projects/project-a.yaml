@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: project-a
+  namespace: argocd
+spec:
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: '*'
+    server: '*'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+    namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  roles:
+  - name: project-a-role
+    description: Allow syncing dev and pilot apps from group pilot and prod groups
+    policies:
+      - p, proj:project-a:project-a-role, applications, get, project-a/*, allow
+      - p, proj:project-a:project-a-role, applications, sync, project-a/*, allow
+    groups:
+      - example-group-a

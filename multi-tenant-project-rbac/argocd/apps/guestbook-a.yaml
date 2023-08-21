@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook-a
+  namespace: argocd
+spec:
+  project: project-a
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+  - repoURL: https://github.com/akuity/guestbook-deploy.git
+    targetRevision: HEAD
+    path: env/dev
+  destination:
+    name: demo1
+    namespace: guestbook-a
