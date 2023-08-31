@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: multi-tenant-project-rbac-app-of-apps
+  name: app-of-apps-multi-tenant-project-rbac
 spec:
   project: default
   syncPolicy:
