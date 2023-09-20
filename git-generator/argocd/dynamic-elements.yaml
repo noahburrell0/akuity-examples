@@ -27,7 +27,7 @@ spec:
       project: default
       source:
         repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
-        path: '{{.path}}'
+        path: '{{.path.path}}'
         targetRevision: '{{.branch}}'
       syncPolicy:
         syncOptions:
