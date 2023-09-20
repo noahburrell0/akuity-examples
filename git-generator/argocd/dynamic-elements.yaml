@@ -16,13 +16,13 @@ spec:
           - list:
               elements:
                 - clusterName: demo1
-                  normalizedRevision: head
+                  branch: main
   template:
     metadata:
       name: 'git-generator-{{.path.basename}}-{{.clusterName}}'
     spec:
       destination:
-        namespace: '{{.path.basename}}-{{.normalizedRevision}}'
+        namespace: '{{.path.basename}}-{{.branch}}'
         name: '{{.clusterName}}'
       project: default
       source:
