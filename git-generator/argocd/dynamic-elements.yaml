@@ -19,16 +19,16 @@ spec:
                   branch: HEAD
   template:
     metadata:
-      name: 'git-generator-{{.path.basename}}-{{clusterName}}'
+      name: 'git-generator-{{.path.basename}}-{{.clusterName}}'
     spec:
       destination:
-        namespace: '{{.path.basename}}-{{branch}}'
+        namespace: '{{.path.basename}}-{{.branch}}'
         name: '{{.clusterName}}'
       project: default
       source:
         repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
         path: '{{.path}}'
-        targetRevision: '{{branch}}'
+        targetRevision: '{{.branch}}'
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
