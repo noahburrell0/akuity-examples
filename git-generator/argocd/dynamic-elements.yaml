@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: git-generator
+spec:
+  goTemplate: true
+  goTemplateOptions: [ "missingkey=error" ]
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+              revision: HEAD
+              directories:
+              - path: git-generator/configs/*
+          - list:
+              elements:
+                - clusterName: demo1
+                  branch: HEAD
+  template:
+    metadata:
+      name: 'git-generator-{{path.basename}}-{{clusterName}}'
+    spec:
+      destination:
+        namespace: '{{path.basename}}-{{branch}}'
+        name: '{{clusterName}}'
+      project: default
+      source:
+        repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+        path: '{{path}}'
+        targetRevision: '{{branch}}'
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
