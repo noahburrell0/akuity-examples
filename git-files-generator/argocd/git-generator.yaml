@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: git-files-generator
+spec:
+  goTemplate: true
+  goTemplateOptions: [ "missingkey=error" ]
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+              revision: HEAD
+              files:
+              - path: git-files-generator/configs/config.yaml
+          - list:
+              elements: []
+              elementsYaml: "{{ .clusters | toJson }}"
+  template:
+    metadata:
+      name: 'git-files-generator-{{.env}}'
+    spec:
+      destination:
+        namespace: 'git-files-generator-guestbook-{{.env}}'
+        name: '{{.name}}'
+      project: default
+      source:
+        repoURL: https://github.com/noahburrell0/guestbook-deploy.git
+        targetRevision: main
+        path: env/{{.env}}
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true

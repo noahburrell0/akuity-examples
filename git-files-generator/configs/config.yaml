@@ -1,0 +1,7 @@
+clusters:
+- name: demo1
+  env: dev
+- name: demo1
+  env: stage
+- name: demo1
+  env: prod
