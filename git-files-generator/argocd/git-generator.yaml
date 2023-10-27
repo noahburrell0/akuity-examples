@@ -26,11 +26,11 @@ spec:
           - list:
               elements: []
               elementsYaml: "{{ .clusters | toJson }}"
-      template:
-        metadata: {}
-        spec:
-          syncPolicy:
-            automated: {}
+        template:
+          metadata: {}
+          spec:
+            syncPolicy:
+              automated: {}
   template:
     metadata:
       name: 'git-files-generator-{{.env}}'
