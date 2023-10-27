@@ -22,7 +22,7 @@ spec:
     spec:
       destination:
         namespace: 'git-files-generator-guestbook-{{.env}}'
-        name: '{{.name}}'
+        name: '{{.clusterName}}'
       project: default
       source:
         repoURL: https://github.com/noahburrell0/guestbook-deploy.git
