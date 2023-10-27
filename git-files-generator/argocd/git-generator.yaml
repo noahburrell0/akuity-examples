@@ -30,7 +30,6 @@ spec:
           metadata: {}
           spec:
             project: default
-            
             syncPolicy:
               automated: {}
   template:
