@@ -29,7 +29,7 @@ spec:
         template:
           metadata: {}
           spec:
-            project: {}
+            project: default
             destination: {}
             syncPolicy:
               automated: {}
