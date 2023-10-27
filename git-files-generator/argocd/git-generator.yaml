@@ -12,10 +12,20 @@ spec:
               repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
               revision: HEAD
               files:
-              - path: git-files-generator/configs/config.yaml
+              - path: git-files-generator/configs/prod-config.yaml
           - list:
               elements: []
-              elementsYaml: "{{ .clusters.env ne 'prod' | .clusters | toJson }}"
+              elementsYaml: "{{ .clusters | toJson }}"
+    - matrix:
+        generators:
+          - git:
+              repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+              revision: HEAD
+              files:
+              - path: git-files-generator/configs/non-prod-config.yaml
+          - list:
+              elements: []
+              elementsYaml: "{{ .clusters | toJson }}"
   template:
     metadata:
       name: 'git-files-generator-{{.env}}'

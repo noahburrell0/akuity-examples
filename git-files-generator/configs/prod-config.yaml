@@ -1,0 +1,3 @@
+clusters:
+- clusterName: demo1
+  env: prod
