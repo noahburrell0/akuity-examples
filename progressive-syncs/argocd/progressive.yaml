@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: progressive-syncs
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: demo1
+        env: dev
+      - cluster: demo1
+        env: stage
+      - cluster: demo1
+        env: prod
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - dev
+          #maxUpdate: 100%  # if undefined, all applications matched are updated together (default is 100%)
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - qa
+          maxUpdate: 0      # if 0, no matched applications will be updated
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - prod
+          maxUpdate: 10%    # maxUpdate supports both integer and percentage string values (rounds down, but floored at 1 Application for >0%)
+  goTemplate: true
+  template:
+    metadata:
+      name: 'progressive-guestbook-{{.env}}'
+      labels:
+        envLabel: '{{.env}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/noahburrell0/guestbook-deploy.git
+        targetRevision: main
+        path: env/{{.env}}
+      destination:
+        name: '{{.cluster}}'
+        namespace: guestbook
