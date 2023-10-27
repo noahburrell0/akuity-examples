@@ -26,7 +26,7 @@ spec:
             - key: envLabel
               operator: In
               values:
-                - qa
+                - stage
           maxUpdate: 0      # if 0, no matched applications will be updated
         - matchExpressions:
             - key: envLabel
