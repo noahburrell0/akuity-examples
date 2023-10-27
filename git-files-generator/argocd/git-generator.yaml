@@ -15,7 +15,7 @@ spec:
               - path: git-files-generator/configs/config.yaml
           - list:
               elements: []
-              elementsYaml: "{{ .clusters | toJson }}"
+              elementsYaml: "{{ select(.clusters.env!='prod') | .clusters | toJson }}"
   template:
     metadata:
       name: 'git-files-generator-{{.env}}'
