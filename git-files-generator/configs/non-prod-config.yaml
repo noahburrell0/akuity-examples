@@ -11,3 +11,6 @@ clusters:
 - clusterName: demo1
   env: stage-b
   path: stage
+- clusterName: demo1
+  env: stage-c
+  path: stage
