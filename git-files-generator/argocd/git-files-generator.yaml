@@ -10,7 +10,7 @@ spec:
         generators:
           - git:
               repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
-              revision: env/test
+              revision: test1
               files:
               - path: git-files-generator/configs/prod-config.yaml
           - list:
@@ -20,7 +20,7 @@ spec:
         generators:
           - git:
               repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
-              revision: env/test
+              revision: test1
               files:
               - path: git-files-generator/configs/non-prod-config.yaml
           - list:
