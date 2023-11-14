@@ -3,3 +3,5 @@ clusters:
   env: dev
 - clusterName: demo1
   env: stage
+- clusterName: demo1
+  env: stage-a
