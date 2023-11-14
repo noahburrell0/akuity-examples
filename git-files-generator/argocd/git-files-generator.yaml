@@ -44,7 +44,7 @@ spec:
       source:
         repoURL: https://github.com/noahburrell0/guestbook-deploy.git
         targetRevision: main
-        path: env/{{.env}}
+        path: env/{{.path}}
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
