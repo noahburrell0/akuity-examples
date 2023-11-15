@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps-progressive-syncs
+spec:
+  project: default
+  syncPolicy:
+    automated: {}
+  source:
+    repoURL: https://github.com/noahburrell0/akuity-examples.git
+    targetRevision: main
+    path: multi-source-notifications-test/apps
+    directory:
+      recurse: true
+  destination:
+    name: in-cluster
+    namespace: argocd
