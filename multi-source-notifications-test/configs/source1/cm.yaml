@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: cm-a
 data:
-  data: data
+  data: data1
