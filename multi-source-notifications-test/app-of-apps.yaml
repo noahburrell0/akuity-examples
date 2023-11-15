@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-of-apps-progressive-syncs
+  name: app-of-apps-notification-multi-source
 spec:
   project: default
   syncPolicy:
     automated: {}
   source:
     repoURL: https://github.com/noahburrell0/akuity-examples.git
-    targetRevision: main
+    targetRevision: notification-test
     path: multi-source-notifications-test/apps
     directory:
       recurse: true
