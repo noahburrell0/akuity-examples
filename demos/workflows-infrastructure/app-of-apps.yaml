@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-workflows-infrastructure
+spec:
+  project: default
+  syncPolicy:
+    automated: {}
+  source:
+    repoURL: https://github.com/noahburrell0/akuity-examples.git
+    targetRevision: main
+    path: demos/workflows-infrastructure/apps
+    directory:
+      recurse: true
+  destination:
+    name: in-cluster
+    namespace: argocd
