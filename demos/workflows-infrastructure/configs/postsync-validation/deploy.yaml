@@ -68,6 +68,14 @@ spec:
         - /bin/bash
         - -c
         - |
+          set -xe
           apt update && apt install -y curl
           curl -f http://postsync-validation-svc
-          echo $?
+          if [ $? -eq 0 ]
+          then
+            echo "SUCCESS"
+            exit 0
+          else
+            echo "FAILURE"
+            exit 1
+          fi
