@@ -30,7 +30,8 @@ spec:
             memory: 32Mi
             cpu: 5m
         env:
-          ERROR_RATE: '0'
+          name: ERROR_RATE
+          value: '0'
 
 ---
 
