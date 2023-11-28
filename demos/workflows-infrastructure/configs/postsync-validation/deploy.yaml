@@ -62,10 +62,10 @@ spec:
     spec:
       restartPolicy: Never
       containers:
-      - name: ubuntu
-        image: ubuntu:22.04
+      - name: bash
+        image: bash:5.2
         command:
-        - /bin/bash
+        - /usr/local/bin/bash
         - -c
         - |
           curl -f http://postsync-validation-svc
