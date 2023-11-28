@@ -5,6 +5,9 @@ kind: Kustomization
 resources:
 - install.yaml
 
+patchesStrategicMerge:
+- role.yaml
+
 patches:
 - patch: |-
     - op: add
