@@ -3,10 +3,7 @@ kind: Kustomization
 
 
 resources:
-- install.yaml
-
-patchesStrategicMerge:
-- role.yaml
+- default-clusterrole
 
 patches:
 - patch: |-
