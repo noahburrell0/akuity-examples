@@ -62,11 +62,12 @@ spec:
     spec:
       restartPolicy: Never
       containers:
-      - name: bash
-        image: bash:5.2
+      - name: ubuntu
+        image: ubuntu:22.04
         command:
-        - /usr/local/bin/bash
+        - /bin/bash
         - -c
         - |
+          apt update && apt install -y curl
           curl -f http://postsync-validation-svc
           echo $?
