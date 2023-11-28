@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workflows
+  namespace: argocd
+spec:
+  project: demo-workflows-infrastructure
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+  sources:
+  - path: demos/workflows-infrastructure/configs/workflows
+    repoURL: https://github.com/noahburrell0/akuity-examples.git
+    targetRevision: main
+  destination:
+    name: demo1
+    namespace: argo
