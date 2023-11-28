@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postsync-validation-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postsync
+  template:
+    metadata:
+      labels:
+        app: postsync
+    spec:
+      containers:
+      - name: canary-demo
+        image: argoproj/rollouts-demo:green
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: 32Mi
+            cpu: 5m
+        env:
+          ERROR_RATE: '0'
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postsync-validation-svc
+spec:
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: postsync
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postsync-validation-hook
+  annotations:
+     argocd.argoproj.io/hook: PostSync
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: alpine
+        image: alpine:3.18.4
+        command:
+        - /bin/bash
+        - -c
+        - |
+          curl -f http://postsync-validation-svc
+          echo $?
