@@ -4,7 +4,7 @@ kind: Kustomization
 
 resources:
 - install.yaml
-- default-clusterrole
+- default-clusterrole.yaml
 
 patches:
 - patch: |-
