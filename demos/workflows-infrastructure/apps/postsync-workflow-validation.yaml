@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: postsync-workflow-validation
+spec:
+  generators:
+  - list:
+      elements:
+      - name: success
+        errors: '0'
+      - name: fail
+        errors: '1'
+  template:
+    metadata:
+      name: 'postsync-workflow-validation-{{name}}'
+      namespace: argocd
+    spec:
+      project: demo-workflows-infrastructure
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+      sources:
+      - path: demos/workflows-infrastructure/configs/postsync-workflow-validation
+        repoURL: https://github.com/noahburrell0/akuity-examples.git
+        targetRevision: main
+        kustomize:
+          patches:
+            - target:
+                kind: Deployment
+                name: postsync-validation-deploy
+              patch: |-
+                - op: add
+                  path: /spec/template/spec/containers/0/env/0/name
+                  value: ERROR_RATE
+                - op: add
+                  path: /spec/template/spec/containers/0/env/0/value
+                  value: '{{errors}}'
+      destination:
+        name: demo1
+        namespace: 'postsync-workflow-validation-{{name}}'

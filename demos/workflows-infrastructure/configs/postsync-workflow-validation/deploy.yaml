@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postsync-validation-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postsync
+  template:
+    metadata:
+      labels:
+        app: postsync
+    spec:
+      containers:
+      - name: canary-demo
+        image: argoproj/rollouts-demo:green
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: 32Mi
+            cpu: 5m
+        env:
+        - name: ERROR_RATE
+          value: '0'
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postsync-validation-svc
+spec:
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: postsync
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: get-color-validation-
+spec:
+  entrypoint: main
+  templates:
+    - name: main
+      steps:
+        - - name: get-color
+            template: http
+            arguments:
+              parameters: [{name: url, value: "http://postsync-validation-svc/color"}]
+    - name: http
+      inputs:
+        parameters:
+          - name: url
+      http:
+        timeoutSeconds: 20 # Default 30
+        url: "{{inputs.parameters.url}}"
+        method: "GET" # Default GET
+        successConfidition: "response.statusCode == 200"

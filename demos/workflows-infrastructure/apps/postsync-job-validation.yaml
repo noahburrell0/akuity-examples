@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: postsync-validation
+  name: postsync-job-validation
 spec:
   generators:
   - list:
@@ -12,7 +12,7 @@ spec:
         errors: '1'
   template:
     metadata:
-      name: 'postsync-validation-{{name}}'
+      name: 'postsync-job-validation-{{name}}'
       namespace: argocd
     spec:
       project: demo-workflows-infrastructure
@@ -20,7 +20,7 @@ spec:
         syncOptions:
           - CreateNamespace=true
       sources:
-      - path: demos/workflows-infrastructure/configs/postsync-validation
+      - path: demos/workflows-infrastructure/configs/postsync-job-validation
         repoURL: https://github.com/noahburrell0/akuity-examples.git
         targetRevision: main
         kustomize:
@@ -37,4 +37,4 @@ spec:
                   value: '{{errors}}'
       destination:
         name: demo1
-        namespace: 'postsync-validation-{{name}}'
+        namespace: 'postsync-job-validation-{{name}}'
