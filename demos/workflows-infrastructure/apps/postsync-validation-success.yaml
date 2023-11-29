@@ -34,7 +34,7 @@ spec:
                   value: ERROR_RATE
                 - op: add
                   path: /spec/template/spec/containers/0/env/0/value
-                  value: {{errors}}
+                  value: '{{errors}}''
       destination:
         name: demo1
         namespace: 'postsync-validation-{{name}}'
