@@ -29,6 +29,9 @@ spec:
           requests:
             memory: 32Mi
             cpu: 5m
+        env:
+        - name: ERROR_RATE
+          value: '0'
 
 ---
 
