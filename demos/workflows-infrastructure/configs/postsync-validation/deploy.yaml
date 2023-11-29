@@ -68,7 +68,7 @@ spec:
         - /bin/bash
         - -c
         - |
-          set -xe
+          set -x
           apt update && apt install -y curl
           curl -f http://postsync-validation-svc/color
           if [ $? -eq 0 ]
