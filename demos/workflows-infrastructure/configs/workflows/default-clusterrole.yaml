@@ -10,3 +10,6 @@ subjects:
 - kind: ServiceAccount
   name: default
   namespace: argo
+- kind: ServiceAccount
+  name: argo
+  namespace: argo
