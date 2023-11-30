@@ -50,11 +50,12 @@ spec:
 
 ---
 
-apiVersion: v1
-kind: ServiceAccount
+kind: Secret
 metadata:
-  name: workflow
-automountServiceAccountToken: false
+  name: default.service-account-token
+  annotations:
+    kubernetes.io/service-account.name: default
+type: kubernetes.io/service-account-token
 
 ---
 
@@ -66,7 +67,7 @@ metadata:
      argocd.argoproj.io/hook: PostSync
 spec:
   entrypoint: main
-  serviceAccountName: workflow
+  serviceAccountName: default
   templates:
     - name: main
       steps:
