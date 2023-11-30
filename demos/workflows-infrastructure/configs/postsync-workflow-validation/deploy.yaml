@@ -54,10 +54,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   name: get-color-validation
+  namespace: argo
   annotations:
      argocd.argoproj.io/hook: PostSync
 spec:
   entrypoint: main
+  serviceAccountName: default
   templates:
     - name: main
       steps:
@@ -70,7 +72,6 @@ spec:
         parameters:
           - name: url
       http:
-        timeoutSeconds: 20 # Default 30
         url: "{{inputs.parameters.url}}"
-        method: "GET" # Default GET
+        method: "GET"
         successConfidition: "response.statusCode == 200"
