@@ -50,6 +50,14 @@ spec:
 
 ---
 
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: workflow
+automountServiceAccountToken: true
+
+---
+
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
@@ -58,8 +66,7 @@ metadata:
      argocd.argoproj.io/hook: PostSync
 spec:
   entrypoint: main
-  serviceAccountName: default
-  automountServiceAccountToken: false
+  serviceAccountName: workflow
   templates:
     - name: main
       steps:
