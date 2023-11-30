@@ -59,6 +59,7 @@ metadata:
 spec:
   entrypoint: main
   serviceAccountName: default
+  automountServiceAccountToken: false
   templates:
     - name: main
       steps:
