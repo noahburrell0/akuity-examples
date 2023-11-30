@@ -50,6 +50,7 @@ spec:
 
 ---
 
+apiVersion: v1
 kind: Secret
 metadata:
   name: default.service-account-token
