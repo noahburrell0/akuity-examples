@@ -54,7 +54,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: workflow
-automountServiceAccountToken: true
+automountServiceAccountToken: false
 
 ---
 
