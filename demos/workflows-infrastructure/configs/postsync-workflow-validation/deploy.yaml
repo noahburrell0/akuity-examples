@@ -119,3 +119,26 @@ spec:
         url: "{{inputs.parameters.url}}"
         method: "GET"
         successConfidition: "response.statusCode == 200"
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: syncfail-validation-hook
+  annotations:
+     argocd.argoproj.io/hook: SyncFail
+spec:
+  ttlSecondsAfterFinished: 100
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: ubuntu
+        image: ubuntu:20.04
+        command:
+        - /bin/bash
+        - -c
+        - |
+          echo "Oh no! It looks like the sync failed. I'm going to do something about that"
