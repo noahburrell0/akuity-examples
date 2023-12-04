@@ -104,6 +104,8 @@ metadata:
 spec:
   entrypoint: main
   serviceAccountName: default
+  ttlStrategy:
+    secondsAfterCompletion: 100
   templates:
     - name: main
       steps:
