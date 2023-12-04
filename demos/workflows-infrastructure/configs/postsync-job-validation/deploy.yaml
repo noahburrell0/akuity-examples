@@ -58,6 +58,7 @@ metadata:
      argocd.argoproj.io/hook: PostSync
 spec:
   ttlSecondsAfterFinished: 100
+  backoffLimit: 0 
   template:
     spec:
       restartPolicy: Never
