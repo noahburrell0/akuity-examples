@@ -58,7 +58,7 @@ metadata:
      argocd.argoproj.io/hook: PostSync
 spec:
   ttlSecondsAfterFinished: 100
-  backoffLimit: 0 
+  backoffLimit: 0
   template:
     spec:
       restartPolicy: Never
@@ -78,5 +78,5 @@ spec:
             exit 0
           else
             echo "FAILURE"
-            exit 0
+            exit 1
           fi
