@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: external-secrets
+  name: reloader
   namespace: argocd
 spec:
   project: demo-workflows-infrastructure
@@ -14,4 +14,4 @@ spec:
     targetRevision: 1.0.16
   destination:
     name: demo1
-    namespace: external-secrets
+    namespace: reloader
