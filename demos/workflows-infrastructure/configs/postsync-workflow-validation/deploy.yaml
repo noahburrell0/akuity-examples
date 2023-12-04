@@ -1,3 +1,22 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: postsync-validation-deploy-cm
+spec:
+  refreshInterval: 15s
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: gcp
+  target:
+    name: postsync-validation-deploy-cm
+    creationPolicy: Owner
+  data:
+  - secretKey: COLOR
+    remoteRef:
+      key: COLOR
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,6 +51,9 @@ spec:
         env:
         - name: ERROR_RATE
           value: '0'
+        envFrom:
+        - secretRef:
+            name: postsync-validation-deploy-cm
 
 ---
 
