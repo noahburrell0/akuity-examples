@@ -14,3 +14,10 @@ patches:
   target:
     kind: Deployment
     name: argo-server
+- patch: |-
+    - op: add
+      path: /spec/ports/0/nodePort
+      value: 2746
+  target:
+    kind: Service
+    name: argo-server

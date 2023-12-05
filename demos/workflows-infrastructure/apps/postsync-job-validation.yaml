@@ -8,8 +8,10 @@ spec:
       elements:
       - name: success
         errors: '0'
+        nodePort: '8080'
       - name: fail
         errors: '1'
+        nodePort: '8081'
   template:
     metadata:
       name: 'postsync-job-validation-{{name}}'
@@ -35,6 +37,13 @@ spec:
                 - op: add
                   path: /spec/template/spec/containers/0/env/0/value
                   value: '{{errors}}'
+            - target:
+                kind: Service
+                name: postsync-validation-svc
+              patch: |-
+                - op: add
+                  path: /spec/ports/0/nodePort
+                  value: '{{nodePort}}'
       destination:
         name: demo1
         namespace: 'postsync-job-validation-{{name}}'
