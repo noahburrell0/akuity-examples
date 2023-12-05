@@ -85,6 +85,6 @@ spec:
             name: color-test
             creationPolicy: Owner
           data:
-          - secretKey: COLORA
+          - secretKey: COLOR
             remoteRef:
-              key: COLORA
+              key: COLOR
