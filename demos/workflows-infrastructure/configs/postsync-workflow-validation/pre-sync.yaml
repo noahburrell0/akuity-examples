@@ -162,7 +162,6 @@ spec:
   - name: touch-external-secret
     resource:
       action: patch
-      mergeStrategy: merge
       ignore-not-found: true
       # successCondition: status.conditions.0.status == True
       # failureCondition: status.conditions.0.status == False
