@@ -67,8 +67,8 @@ spec:
   templates:
   - name: main
     steps:
-      - - name: create-color-secret
-          template: create-color-secret
+      - - name: create-color-external-secret
+          template: create-color-external-secret
       - - name: get-color-secret
           template: get-color-secret
 
