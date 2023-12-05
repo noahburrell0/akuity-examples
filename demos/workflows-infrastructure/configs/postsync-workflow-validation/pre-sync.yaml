@@ -84,6 +84,8 @@ spec:
             parameters:
             - name: color
               value: "{{steps.get-color-secret.outputs.parameters.color}}"
+      - - name: touch-external-secret
+          template: touch-external-secret
 
   - name: create-color-external-secret
     resource:
@@ -157,3 +159,17 @@ spec:
             exit 1
             ;;
         esac
+  - name: touch-external-secret
+    resource:
+      action: patch
+      mergeStrategy: merge
+      ignore-not-found: true
+      # successCondition: status.conditions.0.status == True
+      # failureCondition: status.conditions.0.status == False
+      manifest: |
+        apiVersion: external-secrets.io/v1beta1
+        kind: ExternalSecret
+        metadata:
+          name: postsync-validation-deploy-cm
+          annotations:
+            akuity.io/refreshedAt: {{workflow.creationTimestamp}}
