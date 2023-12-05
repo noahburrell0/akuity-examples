@@ -86,6 +86,8 @@ spec:
               value: "{{steps.get-color-secret.outputs.parameters.color}}"
       - - name: touch-external-secret
           template: touch-external-secret
+          continueOn:
+            failed: true
 
   - name: create-color-external-secret
     resource:
@@ -163,9 +165,6 @@ spec:
     resource:
       action: patch
       mergeStrategy: json
-      ignoreNotFound: true
-      # successCondition: status.conditions.0.status == True
-      # failureCondition: status.conditions.0.status == False
       flags:
       - externalsecrets.external-secrets.io
       - postsync-validation-deploy-cm
