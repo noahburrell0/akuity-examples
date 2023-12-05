@@ -163,7 +163,7 @@ spec:
     resource:
       action: patch
       mergeStrategy: json
-      ignore-not-found: true
+      ignoreNotFound: true
       # successCondition: status.conditions.0.status == True
       # failureCondition: status.conditions.0.status == False
       flags:
