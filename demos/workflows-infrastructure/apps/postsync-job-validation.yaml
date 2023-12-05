@@ -8,10 +8,10 @@ spec:
       elements:
       - name: success
         errors: '0'
-        nodePort: '8080'
+        nodePort: '30001'
       - name: fail
         errors: '1'
-        nodePort: '8081'
+        nodePort: '30002'
   template:
     metadata:
       name: 'postsync-job-validation-{{name}}'

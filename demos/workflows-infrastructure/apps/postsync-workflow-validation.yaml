@@ -8,10 +8,10 @@ spec:
       elements:
       - name: success
         errors: '0'
-        nodePort: '8082'
+        nodePort: '30003'
       - name: fail
         errors: '1'
-        nodePort: '8083'
+        nodePort: '30004'
   template:
     metadata:
       name: 'postsync-workflow-validation-{{name}}'
