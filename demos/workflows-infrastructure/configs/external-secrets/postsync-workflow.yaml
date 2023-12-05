@@ -76,7 +76,7 @@ spec:
     resource:
       action: create
       setOwnerReference: true
-      successCondition: status.conditions.0.status == True
+      # successCondition: status.conditions.0.status == True
       failureCondition: status.conditions.0.status != True
       manifest: |
         apiVersion: external-secrets.io/v1beta1
@@ -92,9 +92,9 @@ spec:
             name: color-test
             creationPolicy: Owner
           data:
-          - secretKey: COLOR
+          - secretKey: COLORA
             remoteRef:
-              key: COLOR
+              key: COLORA
   - name: get-color-secret
     outputs:
       parameters:
