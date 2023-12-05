@@ -60,7 +60,7 @@ spec:
   ttlStrategy:
     secondsAfterCompletion: 100
   templates:
-  - name: Create color secret
+  - name: create-color-secret
     resource:
       action:
       setOwnerReference: true
