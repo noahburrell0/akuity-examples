@@ -31,6 +31,11 @@ rules:
     resources:
       - externalsecrets
     verbs: ["*"]
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs: ["*"]
 
 ---
 
@@ -58,14 +63,16 @@ spec:
   entrypoint: main
   serviceAccountName: default
   ttlStrategy:
-    secondsAfterCompletion: 100
+    secondsAfterCompletion: 300
   templates:
   - name: main
     steps:
       - - name: create-color-secret
           template: create-color-secret
+      - - name: get-color-secret
+          template: get-color-secret
 
-  - name: create-color-secret
+  - name: create-color-external-secret
     resource:
       action: create
       setOwnerReference: true
@@ -88,3 +95,16 @@ spec:
           - secretKey: COLOR
             remoteRef:
               key: COLOR
+  - name: get-color-secret
+    outputs:
+      parameters:
+      - name: color
+        valueFrom:
+          jsonPath: '{.data.COLOR}'
+    resource:
+      action: get
+      manifest: |
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: color-test
