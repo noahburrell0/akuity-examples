@@ -60,9 +60,14 @@ spec:
   ttlStrategy:
     secondsAfterCompletion: 100
   templates:
+  - name: main
+    steps:
+      - - name: create-color-secret
+          template: create-color-secret
+
   - name: create-color-secret
     resource:
-      action:
+      action: create
       setOwnerReference: true
       successCondition: status.conditions[0].status == True
       manifest: |
