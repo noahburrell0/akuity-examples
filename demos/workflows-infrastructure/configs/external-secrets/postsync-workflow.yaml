@@ -75,7 +75,7 @@ spec:
       - - name: evaluate-color
           template: evaluate-color
           arguments:
-            paramaters:
+            parameters:
             - name: color
               value: "{{steps.get-color-secret.outputs.parameters.color}}"
 
