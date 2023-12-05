@@ -85,7 +85,7 @@ spec:
   entrypoint: main
   serviceAccountName: default
   ttlStrategy:
-    secondsAfterCompletion: 100
+    secondsAfterCompletion: 300
   templates:
     - name: main
       steps:
@@ -111,7 +111,7 @@ metadata:
   annotations:
      argocd.argoproj.io/hook: SyncFail
 spec:
-  ttlSecondsAfterFinished: 100
+  ttlSecondsAfterFinished: 300
   backoffLimit: 0
   template:
     spec:
