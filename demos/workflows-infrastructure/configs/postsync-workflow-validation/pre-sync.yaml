@@ -169,4 +169,4 @@ spec:
         metadata:
           name: postsync-validation-deploy-cm
           annotations:
-            akuity.io/refreshedAt: {{workflow.creationTimestamp}}
+            akuity.io/refreshedAt: "{{workflow.creationTimestamp}}"
