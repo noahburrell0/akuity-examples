@@ -92,9 +92,9 @@ spec:
             name: color-test
             creationPolicy: Owner
           data:
-          - secretKey: COLOR
+          - secretKey: COLORA
             remoteRef:
-              key: COLOR
+              key: COLORA
   - name: get-color-secret
     outputs:
       parameters:
