@@ -3,7 +3,7 @@ kind: ExternalSecret
 metadata:
   name: postsync-validation-deploy-cm
 spec:
-  refreshInterval: 5s
+  refreshInterval: '0'
   secretStoreRef:
     kind: ClusterSecretStore
     name: gcp
