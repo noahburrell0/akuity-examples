@@ -147,5 +147,7 @@ spec:
             exit 0
             ;;
           *)
+            echo "${COLOR} is invalid!"
             exit 1
+            ;;
         esac
