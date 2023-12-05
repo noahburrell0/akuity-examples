@@ -72,6 +72,12 @@ spec:
           template: create-color-external-secret
       - - name: get-color-secret
           template: get-color-secret
+      - - name: evaluate-color
+          template: evaluate-color
+          arguments:
+            paramaters:
+            - name: color-b64
+              value: "{{steps.get-color-secret.outputs.parameters.color}}"
 
   - name: create-color-external-secret
     resource:
@@ -109,3 +115,37 @@ spec:
         kind: Secret
         metadata:
           name: color-test
+  - name: evaluate-color
+    inputs:
+      parameters:
+      - name: color
+    container:
+      image: ubuntu:20.04
+      command:
+      - /bin/bash
+      - -c
+      - |
+        set -x
+        export COLOR=$(echo "{{inputs.parameters.color}}" | base64 -d -)
+        case ${COLOR} in
+          red)
+            exit 0
+            ;;
+          yellow)
+            exit 0
+            ;;
+          blue)
+            exit 0
+            ;;
+          green)
+            exit 0
+            ;;
+          purple)
+            exit 0
+            ;;
+          orange)
+            exit 0
+            ;;
+          *)
+            exit 1
+
