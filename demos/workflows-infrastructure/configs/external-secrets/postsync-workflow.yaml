@@ -76,7 +76,7 @@ spec:
           template: evaluate-color
           arguments:
             paramaters:
-            - name: color-b64
+            - name: color
               value: "{{steps.get-color-secret.outputs.parameters.color}}"
 
   - name: create-color-external-secret
