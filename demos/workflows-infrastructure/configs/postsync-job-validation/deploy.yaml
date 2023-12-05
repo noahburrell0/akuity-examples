@@ -64,6 +64,7 @@ kind: Service
 metadata:
   name: postsync-validation-svc
 spec:
+  type: NodePort
   ports:
   - port: 80
     targetPort: http
