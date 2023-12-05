@@ -78,7 +78,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  name: get-color-validation
+  name: check-errors
   annotations:
      argocd.argoproj.io/hook: PostSync
 spec:
