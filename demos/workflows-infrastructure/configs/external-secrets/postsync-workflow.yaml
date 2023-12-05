@@ -70,6 +70,7 @@ spec:
       action: create
       setOwnerReference: true
       successCondition: status.conditions.0.status == True
+      failureCondition: status.conditions.0.status != True
       manifest: |
         apiVersion: external-secrets.io/v1beta1
         kind: ExternalSecret
