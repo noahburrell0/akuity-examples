@@ -43,7 +43,7 @@ spec:
               patch: |-
                 - op: add
                   path: /spec/ports/0/nodePort
-                  value: '{{nodePort}}'
+                  value: {{nodePort}}
       destination:
         name: demo1
         namespace: 'postsync-workflow-validation-{{name}}'
