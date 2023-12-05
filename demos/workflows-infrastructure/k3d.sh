@@ -7,7 +7,7 @@ CLUSTER=$3
 k3d cluster create ${CLUSTER} \
   --no-lb \
   --k3s-arg '--disable=traefik@server:0' \
-  -p '30000-30004:30000:30004@servers:0:direct' \
+  -p '30000-30004:30000-30004@servers:0:direct' \
   --wait
 
 akuity login
