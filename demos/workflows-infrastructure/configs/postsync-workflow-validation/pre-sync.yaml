@@ -97,7 +97,7 @@ spec:
         metadata:
           name: color-test
         spec:
-          refreshInterval: 5s
+          refreshInterval: '0'
           secretStoreRef:
             kind: ClusterSecretStore
             name: gcp
