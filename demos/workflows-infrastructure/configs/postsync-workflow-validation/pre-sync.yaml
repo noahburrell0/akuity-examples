@@ -162,11 +162,14 @@ spec:
   - name: touch-external-secret
     resource:
       action: patch
+      mergeStrategy: json
       ignore-not-found: true
+      # successCondition: status.conditions.0.status == True
+      # failureCondition: status.conditions.0.status == False
+      flags:
+      - externalsecrets.external-secrets.io
+      - postsync-validation-deploy-cm
       manifest: |
-        apiVersion: external-secrets.io/v1beta1
-        kind: ExternalSecret
-        metadata:
-          name: postsync-validation-deploy-cm
-          annotations:
-            akuity.io/refreshedAt: "{{workflow.creationTimestamp}}"
+        - op: replace
+          path: /metadata/annotations/akuity.io~1refreshedAt
+          value: "{{workflow.creationTimestamp}}"
