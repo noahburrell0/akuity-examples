@@ -70,7 +70,7 @@ spec:
   entrypoint: main
   serviceAccountName: default
   ttlStrategy:
-    secondsAfterCompletion: 300
+    secondsAfterCompletion: 3600
   templates:
   - name: main
     steps:
