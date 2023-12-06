@@ -16,6 +16,8 @@ spec:
     metadata:
       name: 'postsync-workflow-validation-{{name}}'
       namespace: argocd
+      labels:
+        notifications: "true"
     spec:
       project: demo-workflows-infrastructure
       syncPolicy:
