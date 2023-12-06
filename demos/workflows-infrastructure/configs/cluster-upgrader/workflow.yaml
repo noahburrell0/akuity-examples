@@ -63,7 +63,7 @@ subjects:
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  name: color-validation
+  name: cluster-upgrade
   annotations:
      argocd.argoproj.io/hook: PreSync
 spec:
@@ -76,18 +76,19 @@ spec:
     steps:
       - - name: pre-validation
           template: pre-validation
+
+      # pre-validation succeeds
       - - name: create-github-issue
           template: create-github-issue
+          dependencies: ["pre-validation"]
       - - name: k8s-control-plane-upgrade
           template: k8s-control-plane-upgrade
       - - name: k8s-node-upgrade
           template: k8s-node-upgrade
-      - - name: validation
-          template: validation
-      - - name: touch-external-secret
-          template: touch-external-secret
-      - - name: touch-external-secret
-          template: touch-external-secret
+      - - name: post-validation
+          template: post-validation
+      - - name: update-github-issue
+          template: update-github-issue
 
   - name: create-color-external-secret
     resource:
