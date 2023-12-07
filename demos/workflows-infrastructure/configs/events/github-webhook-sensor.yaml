@@ -47,7 +47,7 @@ spec:
           parameters:
           - src:
               dependencyName: github-cluster-upgrade-issue
-              contextTemplate: 'cluster-upgrader-{{ .Input.id }}'
+              contextTemplate: 'cluster-upgrader-{{ .Input.id | trunc 8}}'
             dest: metadata.name
           - src:
               dependencyName: github-cluster-upgrade-issue
