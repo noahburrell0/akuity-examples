@@ -3,8 +3,10 @@ kind: Sensor
 metadata:
   name: github-webhook-sensor
 spec:
+  template:
+    serviceAccountName: operate-workflow-sa
   dependencies:
-    - name: github-webhook
+    - name: github-cluster-upgrade-issue
       eventSourceName: github-webhook-source
       eventName: github
       filters:
@@ -37,9 +39,37 @@ spec:
           type: string
           value:
             - "account/.*"
-
   triggers:
     - template:
-        conditions: "github-webhook"
         name: upgrade-cluster-trigger
-        log: {} # debug
+        argoWorkflow:
+          operation: submit
+          parameters:
+          - src:
+              dependencyName: github-cluster-upgrade-issue
+              dataKey: body.issue.labels.#(name%"account*").name
+            dest: spec.arguments.parameters.0.value
+          source:
+            resource:
+
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                name: special-trigger
+              spec:
+                entrypoint: whalesay
+                arguments:
+                  parameters:
+                    - name: message
+                      value: PLACEHOLDER
+                templates:
+                  - name: whalesay
+                    inputs:
+                      parameters:
+                        - name: message
+                    container:
+                      image: docker/whalesay:latest
+                      command: [cowsay]
+                      args: ["{{inputs.parameters.message}}"]
+
+        # log: {} # debug
