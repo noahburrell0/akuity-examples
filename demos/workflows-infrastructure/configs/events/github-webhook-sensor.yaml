@@ -47,7 +47,7 @@ spec:
           parameters:
           - src:
               dependencyName: github-cluster-upgrade-issue
-              dataTemplate: 'cluster-upgrader-{{ randAlphaNum 5 }}'
+              dataTemplate: 'cluster-upgrader-{{ .Input.body.issue.id }}'
             dest: metadata.name
           - src:
               dependencyName: github-cluster-upgrade-issue
