@@ -8,14 +8,8 @@ spec:
       eventSourceName: github-webhook-source
       eventName: github
       filters:
-        exprs:
-        # Check the webhook action for for an opened or labeled issue
-        - expr: action == "opened" || action == "labeled"
-          fields:
-          - name: action
-            path: action
         data:
-        - path: 'action,issue.labels.#(name="upgrade").name,issue.labels.#.name,issue.labels.#.name,issue.labels.#(name=="approved").name,label.name'
+        - path: 'body.action,body.issue.labels.#(name="upgrade").name,body.issue.labels.#.name,body.issue.labels.#.name,body.issue.labels.#(name=="approved").name,body.label.name'
           type: string
           value:
             - '"opened","upgrade","cluster/.*","account/.*","approved"'
