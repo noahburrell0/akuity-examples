@@ -13,14 +13,14 @@ spec:
           type: string
           value:
             - '"labeled","approved","upgrade","approved"'
-        - path: 'body.issue.labels.#()#.name'
-          type: string
-          value:
-            - ".*cluster/.*"
-        - path: 'body.issue.labels.#()#.name'
-          type: string
-          value:
-            - ".*account/.*"
+        # - path: 'body.issue.labels.#()#.name'
+        #   type: string
+        #   value:
+        #     - ".*cluster/.*"
+        # - path: 'body.issue.labels.#()#.name'
+        #   type: string
+        #   value:
+        #     - ".*account/.*"
 
   triggers:
     - template:
