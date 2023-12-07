@@ -12,11 +12,11 @@ spec:
         - path: '[body.action,body.issue.labels.#(name="upgrade").name,body.issue.labels.#(name="approved").name,body.issue.labels.#.name,body.label.name]'
           type: string
           value:
-            - '"labeled","upgrade","approved","cluster/.*","approved"'
+            - '"labeled","upgrade","approved","cluster.*","approved"'
         - path: '[body.action,body.issue.labels.#(name="upgrade").name,body.issue.labels.#(name="approved").name,body.issue.labels.#.name,body.label.name]'
           type: string
           value:
-            - '"labeled","upgrade","approved","account/.*","approved"'
+            - '"labeled","upgrade","approved","account.*","approved"'
 
   triggers:
     - template:
