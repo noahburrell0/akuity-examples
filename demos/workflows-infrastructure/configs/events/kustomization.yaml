@@ -5,4 +5,5 @@ kind: Kustomization
 resources:
 - install.yaml
 - eventbus.yaml
-- webhook-source.yaml
+- github-webhook-source.yaml
+- github-webhook-sensor.yaml
