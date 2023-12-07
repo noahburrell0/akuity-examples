@@ -4,6 +4,7 @@ kind: Kustomization
 
 resources:
 - install.yaml
+- operate-workflows-sa.yaml
 - eventbus.yaml
 - github-webhook-source.yaml
 - github-webhook-sensor.yaml
