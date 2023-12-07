@@ -25,11 +25,11 @@ spec:
           type: string
           value:
             - "upgrade"
-        - path: 'body.issue.labels.#()#.name'
+        - path: 'body.issue.labels.#.name'
           type: string
           value:
             - ".*cluster/.*"
-        - path: 'body.issue.labels.#()#.name'
+        - path: 'body.issue.labels.#.name'
           type: string
           value:
             - ".*account/.*"
