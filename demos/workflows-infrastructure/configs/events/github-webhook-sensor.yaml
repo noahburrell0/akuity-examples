@@ -9,11 +9,11 @@ spec:
       eventName: github
       filters:
         data:
-        - path: 'body.action,body.issue.labels.#.name,body.issue.labels.#.name,body.issue.labels.#.name,body.issue.labels.#.name,body.label.name'
+        - path: 'action,issue.labels.#.name,issue.labels.#.name,issue.labels.#.name,issue.labels.#.name,label.name'
           type: string
           value:
             - '"opened","upgrade","cluster/.*","account/.*","approved"'
-            - '"labeled","upgrade","cluster/.*","account/.*","approved","approved"'
+            - '"labeled","upgrade","cluster/.*","account/.*","approved",approved'
 
   triggers:
     - template:
