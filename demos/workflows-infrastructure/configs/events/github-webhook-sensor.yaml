@@ -15,21 +15,11 @@ spec:
           - name: action
             path: action
         data:
-        # Check that the "upgrade" and "approved" labels are applied
-        - path: 'body.issue.labels.#(name="upgrade").name,body.issue.labels.#(name=="approved").name'
+        - path: 'body.action,body.issue.labels.#(name="upgrade").name,body.issue.labels.#.name,body.issue.labels.#.name,body.issue.labels.#(name=="approved").name,body.label.name'
           type: string
           value:
-            - '"upgrade","approved"'
-        # Check for "cluster/*" label
-        - path: 'body.issue.labels.#.name'
-          type: string
-          value:
-            - "cluster/.*"
-        # Check for "account/*" label
-        - path: 'body.issue.labels.#.name'
-          type: string
-          value:
-            - "account/.*"
+            - '"opened","upgrade","cluster/.*","account/.*","approved"'
+            - '"labeled","upgrade","cluster/.*","account/.*","approved",approved'
 
   triggers:
     - template:
