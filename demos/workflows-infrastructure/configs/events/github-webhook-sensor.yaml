@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: github-webhook-sensor
+spec:
+  dependencies:
+    - name: github-webhook
+      eventSourceName: github-webhook-source
+      eventName: github
+      filters:
+        exprs:
+        # Check the webhook action for for an opened or labeled issue
+        - expr: action == "opened" || action == "labeled"
+          fields:
+          - name: action
+            path: action
+        data:
+        # Check that the "upgrade" and "approved" labels are applied
+        - path: 'body.issue.labels.#(name="upgrade").name,body.issue.labels.#(name=="approved").name'
+          type: string
+          value:
+            - '"upgrade","approved"'
+        # Check for "cluster/*" label
+        - path: 'body.issue.labels.#.name'
+          type: string
+          value:
+            - "cluster/.*"
+        # Check for "account/*" label
+        - path: 'body.issue.labels.#.name'
+          type: string
+          value:
+            - "account/.*"
+
+  triggers:
+    - template:
+        conditions: "github-webhook"
+        name: upgrade-cluster-trigger
+        log: {} # debug
