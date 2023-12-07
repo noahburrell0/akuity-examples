@@ -15,7 +15,7 @@ spec:
           - name: action
             path: action
         data:
-        - path: 'body.action,body.issue.labels.#(name="upgrade").name,body.issue.labels.#.name,body.issue.labels.#.name,body.issue.labels.#(name=="approved").name,body.label.name'
+        - path: 'action,issue.labels.#(name="upgrade").name,issue.labels.#.name,issue.labels.#.name,issue.labels.#(name=="approved").name,label.name'
           type: string
           value:
             - '"opened","upgrade","cluster/.*","account/.*","approved"'
