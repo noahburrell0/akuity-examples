@@ -17,6 +17,10 @@ spec:
           type: string
           value:
             - "approved"
+        - path: 'body.issue.state'
+          type: string
+          value:
+            - "open"
         - path: 'body.issue.labels.#(name="approved").name'
           type: string
           value:
