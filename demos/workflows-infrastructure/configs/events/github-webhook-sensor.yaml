@@ -47,6 +47,10 @@ spec:
           parameters:
           - src:
               dependencyName: github-cluster-upgrade-issue
+              dataTemplate: 'cluster-upgrader-{{ .Input.body.issue.labels.#(name%"cluster*").name | replace "cluster/" "" }}'
+            dest: metadata.name
+          - src:
+              dependencyName: github-cluster-upgrade-issue
               dataKey: body.issue.labels.#(name%"account*").name
             dest: spec.arguments.parameters.0.value
           source:
@@ -55,7 +59,7 @@ spec:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                name: special-trigger
+                name: PLACEHOLDER
                 namespace: cluster-upgrader
               spec:
                 entrypoint: whalesay
@@ -72,5 +76,3 @@ spec:
                       image: docker/whalesay:latest
                       command: [cowsay]
                       args: ["{{inputs.parameters.message}}"]
-
-        # log: {} # debug
