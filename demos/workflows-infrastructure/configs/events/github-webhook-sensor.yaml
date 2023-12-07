@@ -13,7 +13,7 @@ spec:
           type: string
           value:
             - '"opened","upgrade","cluster/.*","account/.*","approved"'
-            - '"labeled","upgrade","cluster/.*","account/.*","approved",approved'
+            - '"labeled","upgrade","cluster/.*","account/.*","approved","approved"'
 
   triggers:
     - template:
