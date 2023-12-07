@@ -16,7 +16,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: webhook-eventsource
+  name: github-webhook-eventsource
 spec:
   ports:
   - port: 30100
