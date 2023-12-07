@@ -10,7 +10,7 @@ spec:
       filters:
         dataLogicalOperator: "or"
         data:
-        - path: 'action,issue.labels.#.name,issue.labels.#.name,issue.labels.#.name,issue.labels.#.name,label.name'
+        - path: 'body.action,body.issue.labels.#.name,body.issue.labels.#.name,body.issue.labels.#.name,body.issue.labels.#.name,body.label.name'
           type: string
           value:
             - '"labeled","upgrade","cluster/.*","account/.*","approved","approved"'
