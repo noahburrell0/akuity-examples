@@ -9,10 +9,22 @@ spec:
       eventName: github
       filters:
         data:
-        - path: 'body.action,body.label.name,body.issue.labels.#(name="upgrade").name,body.issue.labels.#(name="approved").name'
+        - path: 'body.action'
           type: string
           value:
-            - '"labeled","approved","upgrade","approved"'
+            - "labeled"
+        - path: 'body.label.name'
+          type: string
+          value:
+            - "approved"
+        - path: 'body.issue.labels.#(name="approved").name'
+          type: string
+          value:
+            - "approved"
+        - path: 'body.issue.labels.#(name="upgrade").name'
+          type: string
+          value:
+            - "upgrade"
         # - path: 'body.issue.labels.#()#.name'
         #   type: string
         #   value:
