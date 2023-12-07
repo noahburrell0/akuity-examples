@@ -16,7 +16,7 @@ spec:
         - path: 'body.issue.labels.#()#.name'
           type: string
           value:
-            - ".*cluster/.*","account.*"
+            - ".*cluster/.*"
         - path: 'body.issue.labels.#()#.name'
           type: string
           value:
