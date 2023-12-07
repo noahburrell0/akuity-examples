@@ -12,3 +12,17 @@ spec:
       port: "30100"
       endpoint: /github
       method: POST
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webhook-eventsource
+spec:
+  ports:
+  - port: 30100
+    protocol: TCP
+    targetPort: 30100
+    nodePort: 30100
+  selector:
+    eventsource-name: github-webhook-source
+  type: NodePort
