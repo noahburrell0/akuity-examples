@@ -47,7 +47,7 @@ spec:
           parameters:
           - src:
               dependencyName: github-cluster-upgrade-issue
-              dataTemplate: 'cluster-upgrader-{{ .Input.body.issue.labels.#(name%"cluster*").name | replace "cluster/" "" }}'
+              dataTemplate: 'cluster-upgrader-{{ randAlphaNum 5 }}'
             dest: metadata.name
           - src:
               dependencyName: github-cluster-upgrade-issue
