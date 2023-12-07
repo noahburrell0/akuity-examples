@@ -29,14 +29,14 @@ spec:
           type: string
           value:
             - "upgrade"
-        - path: 'body.issue.labels.#.name'
+        - path: 'body.issue.labels.#(name="cluster/*").name'
           type: string
           value:
-            - ".*cluster/.*"
-        - path: 'body.issue.labels.#.name'
+            - "cluster/.*"
+        - path: 'body.issue.labels.#(name="account/*").name'
           type: string
           value:
-            - ".*account/.*"
+            - "account/.*"
 
   triggers:
     - template:
