@@ -21,19 +21,19 @@ spec:
           type: string
           value:
             - "open"
-        - path: 'body.issue.labels.#(name="approved").name'
+        - path: 'body.issue.labels.#(name=="approved").name'
           type: string
           value:
             - "approved"
-        - path: 'body.issue.labels.#(name="upgrade").name'
+        - path: 'body.issue.labels.#(name=="upgrade").name'
           type: string
           value:
             - "upgrade"
-        - path: 'body.issue.labels.#(name="cluster/*").name'
+        - path: 'body.issue.labels.#(name=="cluster/*").name'
           type: string
           value:
             - "cluster/.*"
-        - path: 'body.issue.labels.#(name="account/*").name'
+        - path: 'body.issue.labels.#(name=="account/*").name'
           type: string
           value:
             - "account/.*"
