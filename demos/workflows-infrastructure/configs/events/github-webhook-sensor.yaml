@@ -38,7 +38,7 @@ spec:
         - path: 'body.issue.labels.#(name%"account*").name'
           type: string
           value:
-            - "account/.*"
+            - "project/.*"
   triggers:
     - template:
         name: upgrade-cluster-trigger
@@ -53,26 +53,164 @@ spec:
               dependencyName: github-cluster-upgrade-issue
               dataKey: body.issue.labels.#(name%"account*").name
             dest: spec.arguments.parameters.0.value
+
           source:
             resource:
-
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
                 name: PLACEHOLDER
                 namespace: cluster-upgrader
               spec:
-                entrypoint: whalesay
-                arguments:
-                  parameters:
-                    - name: message
-                      value: PLACEHOLDER
+                entrypoint: main
                 templates:
-                  - name: whalesay
-                    inputs:
-                      parameters:
-                        - name: message
-                    container:
-                      image: docker/whalesay:latest
-                      command: [cowsay]
-                      args: ["{{inputs.parameters.message}}"]
+                - name: main
+                  dag:
+                    tasks:
+                    - name: pre-checks
+                      template: pre-checks
+                    - name: pre-checks-failed
+                      depends: "pre-checks.Failed"
+                      template: add-comment
+                      arguments:
+                        parameters:
+                        - name: repo-owner
+                          value: REPLACE_ME
+                        - name: repo
+                          value: REPLACE_ME
+                        - name: issue
+                          value: REPLACE_ME
+                        - name: comment
+                          value: REPLACE ME PRECHECKS FAILED
+                    - name: pre-checks-succeeded
+                      depends: "pre-checks.Succeeded"
+                      template: add-comment
+                      arguments:
+                        parameters:
+                        - name: repo-owner
+                          value: REPLACE_ME
+                        - name: repo
+                          value: REPLACE_ME
+                        - name: issue
+                          value: REPLACE_ME
+                        - name: comment
+                          value: REPLACE ME PRECHECKS SUCCEEDED
+                    - name: upgrade-cluster
+                      dependencies: [pre-checks-succeeded]
+                      template: upgrade-cluster
+                      arguments:
+                        parameters:
+                        - name: version
+                          value: REPLACE_ME
+                        - name: cluster
+                          value: REPLACE_ME
+                        - name: project
+                          value: REPLACE_ME
+                    - name: validate-upgrade
+                      dependencies: [upgrade-cluster]
+                      template: validate-upgrade
+                      arguments:
+                        parameters:
+                        - name: version
+                          value: REPLACE_ME
+                        - name: cluster
+                          value: REPLACE_ME
+                        - name: project
+                          value: REPLACE_ME
+                    - name: validate-upgrade-failed
+                      depends: "validate-upgrade.Failed"
+                      template: add-comment
+                      arguments:
+                        parameters:
+                        - name: repo-owner
+                          value: REPLACE_ME
+                        - name: repo
+                          value: REPLACE_ME
+                        - name: issue
+                          value: REPLACE_ME
+                        - name: comment
+                          value: REPLACE ME VALIDATE UPGRADE FAILED
+                    - name: validate-upgrade-succeeded
+                      depends: "validate-upgrade.Succeeded"
+                      template: add-comment
+                      arguments:
+                        parameters:
+                        - name: repo-owner
+                          value: REPLACE_ME
+                        - name: repo
+                          value: REPLACE_ME
+                        - name: issue
+                          value: REPLACE_ME
+                        - name: comment
+                          value: "REPLACE ME VALIDATE UPGRADE FAILED"
+                    - name: close-issue
+                      dependencies: [validate-upgrade-succeeded]
+                      template: close-issue
+                      arguments:
+                        parameters:
+                        - name: repo-owner
+                          value: REPLACE_ME
+                        - name: repo
+                          value: REPLACE_ME
+                        - name: issue
+                          value: REPLACE_ME
+
+                - name: add-comment
+                  inputs:
+                    parameters:
+                    - name: repo-owner
+                    - name: repo
+                    - name: issue
+                    - name: comment
+                  http:
+                    url: "https://api.github.com/repos/{{inputs.parameters.repo-owner}}/{{inputs.parameters.repo}}/issues/{{inputs.parameters.issue}}/comments"
+                    method: "POST"
+                    headers:
+                    - name: Content-Type
+                      value: application/json
+                    - name: Authorization
+                      valueFrom:
+                        secretKeyRef:
+                          key: DEMO_GH_PAT
+                          name: cluster-upgrade-secret
+                    successConfidition: "response.statusCode == 200"
+                    body: '{"body":"{{inputs.parameters.comment}}"}'
+
+                - name: pre-checks
+                  container:
+                    image: docker/whalesay
+                    command: [cowsay]
+                    args: ["Moo"]
+
+                - name: upgrade-cluster
+                  inputs:
+                    parameters:
+                    - name: version
+                    - name: cluster
+                    - name: project
+                  container:
+                    image: docker/whalesay
+                    command: [cowsay]
+                    args: ["Moo"]
+
+                - name: validate-upgrade
+                  inputs:
+                    parameters:
+                    - name: version
+                    - name: cluster
+                    - name: project
+                  container:
+                    image: docker/whalesay
+                    command: [cowsay]
+                    args: ["Moo"]
+
+                - name: close-issue
+                  inputs:
+                    parameters:
+                    - name: repo-owner
+                    - name: repo
+                    - name: issue
+                  container:
+                    image: docker/whalesay
+                    command: [cowsay]
+                    args: ["Moo"]
