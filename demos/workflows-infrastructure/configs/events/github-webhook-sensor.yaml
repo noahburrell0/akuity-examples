@@ -71,22 +71,22 @@ spec:
                 namespace: cluster-upgrader
               spec:
                 entrypoint: main
+                arguments:
+                  parameters:
+                  - name: repo-owner
+                    value: PLACEHOLDER
+                  - name: repo
+                    value: PLACEHOLDER
+                  - name: issue
+                    value: PLACEHOLDER
+                  - name: version
+                    value: PLACEHOLDER
+                  - name: cluster
+                    value: PLACEHOLDER
+                  - name: project
+                    value: PLACEHOLDER
                 templates:
                 - name: main
-                  inputs:
-                    parameters:
-                    - name: repo-owner
-                      value: PLACEHOLDER
-                    - name: repo
-                      value: PLACEHOLDER
-                    - name: issue
-                      value: PLACEHOLDER
-                    - name: version
-                      value: PLACEHOLDER
-                    - name: cluster
-                      value: PLACEHOLDER
-                    - name: project
-                      value: PLACEHOLDER
                   dag:
                     tasks:
                     - name: pre-checks
@@ -97,8 +97,11 @@ spec:
                       arguments:
                         parameters:
                         - name: repo-owner
+                          value: "{{workflow.parameters.repo-owner}}"
                         - name: repo
+                          value: "{{workflow.parameters.repo}}"
                         - name: issue
+                          value: "{{workflow.parameters.issue}}"
                         - name: comment
                           value: REPLACE ME PRECHECKS FAILED
                     - name: pre-checks-succeeded
@@ -107,8 +110,11 @@ spec:
                       arguments:
                         parameters:
                         - name: repo-owner
+                          value: "{{workflow.parameters.repo-owner}}"
                         - name: repo
+                          value: "{{workflow.parameters.repo}}"
                         - name: issue
+                          value: "{{workflow.parameters.issue}}"
                         - name: comment
                           value: REPLACE ME PRECHECKS SUCCEEDED
                     - name: upgrade-cluster
@@ -117,24 +123,33 @@ spec:
                       arguments:
                         parameters:
                         - name: version
+                          value: "{{workflow.parameters.version}}"
                         - name: cluster
+                          value: "{{workflow.parameters.cluster}}"
                         - name: project
+                          value: "{{workflow.parameters.project}}"
                     - name: validate-upgrade
                       depends: "upgrade-cluster.Succeeded"
                       template: validate-upgrade
                       arguments:
                         parameters:
                         - name: version
+                          value: "{{workflow.parameters.version}}"
                         - name: cluster
+                          value: "{{workflow.parameters.cluster}}"
                         - name: project
+                          value: "{{workflow.parameters.project}}"
                     - name: validate-upgrade-failed
                       depends: "validate-upgrade.Failed"
                       template: add-comment
                       arguments:
                         parameters:
                         - name: repo-owner
+                          value: "{{workflow.parameters.repo-owner}}"
                         - name: repo
+                          value: "{{workflow.parameters.repo}}"
                         - name: issue
+                          value: "{{workflow.parameters.issue}}"
                         - name: comment
                           value: REPLACE ME VALIDATE UPGRADE FAILED
                     - name: validate-upgrade-succeeded
@@ -143,8 +158,11 @@ spec:
                       arguments:
                         parameters:
                         - name: repo-owner
+                          value: "{{workflow.parameters.repo-owner}}"
                         - name: repo
+                          value: "{{workflow.parameters.repo}}"
                         - name: issue
+                          value: "{{workflow.parameters.issue}}"
                         - name: comment
                           value: "REPLACE ME VALIDATE UPGRADE FAILED"
                     - name: close-issue
@@ -153,8 +171,11 @@ spec:
                       arguments:
                         parameters:
                         - name: repo-owner
+                          value: "{{workflow.parameters.repo-owner}}"
                         - name: repo
+                          value: "{{workflow.parameters.repo}}"
                         - name: issue
+                          value: "{{workflow.parameters.issue}}"
 
                 - name: add-comment
                   inputs:
