@@ -96,7 +96,7 @@ spec:
                         - name: comment
                           value: REPLACE ME PRECHECKS SUCCEEDED
                     - name: upgrade-cluster
-                      dependencies: [pre-checks-succeeded]
+                      depends: "pre-checks-succeeded.Succeeded"
                       template: upgrade-cluster
                       arguments:
                         parameters:
@@ -107,7 +107,7 @@ spec:
                         - name: project
                           value: REPLACE_ME
                     - name: validate-upgrade
-                      dependencies: [upgrade-cluster]
+                      depends: "upgrade-cluster.Succeeded"
                       template: validate-upgrade
                       arguments:
                         parameters:
@@ -144,7 +144,7 @@ spec:
                         - name: comment
                           value: "REPLACE ME VALIDATE UPGRADE FAILED"
                     - name: close-issue
-                      dependencies: [validate-upgrade-succeeded]
+                      depends: "validate-upgrade-succeeded.Succeeded"
                       template: close-issue
                       arguments:
                         parameters:
