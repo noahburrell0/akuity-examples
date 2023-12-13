@@ -35,7 +35,7 @@ spec:
           type: string
           value:
             - "cluster/.*"
-        - path: 'body.issue.labels.#(name%"account*").name'
+        - path: 'body.issue.labels.#(name%"project*").name'
           type: string
           value:
             - "project/.*"
@@ -51,7 +51,7 @@ spec:
             dest: metadata.name
           - src:
               dependencyName: github-cluster-upgrade-issue
-              dataKey: body.issue.labels.#(name%"account*").name
+              dataKey: body.issue.labels.#(name%"project*").name
             dest: spec.arguments.parameters.0.value
 
           source:
