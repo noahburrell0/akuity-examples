@@ -164,7 +164,7 @@ spec:
                         - name: issue
                           value: "{{workflow.parameters.issue}}"
                         - name: comment
-                          value: "REPLACE ME VALIDATE UPGRADE FAILED"
+                          value: "REPLACE ME VALIDATE UPGRADE SUCCEEDED"
                     - name: close-issue
                       depends: "validate-upgrade-succeeded.Succeeded"
                       template: close-issue
@@ -232,7 +232,16 @@ spec:
                     - name: repo-owner
                     - name: repo
                     - name: issue
-                  container:
-                    image: docker/whalesay
-                    command: [cowsay]
-                    args: ["Moo"]
+                  http:
+                    url: "https://api.github.com/repos/{{inputs.parameters.repo-owner}}/{{inputs.parameters.repo}}/issues/{{inputs.parameters.issue}}"
+                    method: "PATCH"
+                    headers:
+                    - name: Content-Type
+                      value: application/json
+                    - name: Authorization
+                      valueFrom:
+                        secretKeyRef:
+                          key: DEMO_GH_PAT
+                          name: cluster-upgrade-secret
+                    successCondition: "response.statusCode == 200"
+                    body: '{"state":"closed"}'
