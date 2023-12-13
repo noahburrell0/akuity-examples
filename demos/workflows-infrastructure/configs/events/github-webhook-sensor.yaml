@@ -195,7 +195,7 @@ spec:
                         secretKeyRef:
                           key: DEMO_GH_PAT
                           name: cluster-upgrade-secret
-                    successCondition: "response.statusCode == 200"
+                    successCondition: "response.statusCode == 201"
                     body: '{"body":"{{inputs.parameters.comment}}"}'
 
                 - name: pre-checks
