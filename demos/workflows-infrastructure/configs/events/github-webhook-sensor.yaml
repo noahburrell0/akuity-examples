@@ -49,10 +49,10 @@ spec:
               dependencyName: github-cluster-upgrade-issue
               contextTemplate: 'cluster-upgrader-{{ .Input.id | trunc 8}}'
             dest: metadata.name
-          - src:
-              dependencyName: github-cluster-upgrade-issue
-              dataKey: body.issue.labels.#(name%"project*").name
-            dest: spec.arguments.parameters.0.value
+          # - src:
+          #     dependencyName: github-cluster-upgrade-issue
+          #     dataKey: body.issue.labels.#(name%"project*").name
+          #   dest: spec.arguments.parameters.0.value
 
           source:
             resource:
