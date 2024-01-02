@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gcloud-config
+data:
+  mygcloud: |
+    [auth]
+    credential_file_override = /certs/svc_account.json
