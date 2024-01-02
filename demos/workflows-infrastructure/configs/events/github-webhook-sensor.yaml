@@ -95,9 +95,9 @@ spec:
                 - name: gcloud-service-account
                   secret:
                     secretName: cluster-upgrade-secret
-                - name: gcloud-config
-                  configMap:
-                    name: gcloud-config
+                # - name: gcloud-config
+                #   configMap:
+                #     name: gcloud-config
                 ttlStrategy:
                   secondsAfterCompletion: 7200
                 arguments:
@@ -250,8 +250,8 @@ spec:
                   container:
                     image: google/cloud-sdk:458.0.1
                     volumeMounts:
-                    - name: gcloud-config
-                      mountPath: /config
+                    # - name: gcloud-config
+                    #   mountPath: /config
                     - name: gcloud-service-account
                       mountPath: "/certs"
                     command:
@@ -259,7 +259,7 @@ spec:
                     - "-c"
                     - |
                       set -xe
-                      export CLOUDSDK_CONFIG=/config
+                      export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=/certs/svc_account.json
                       export CLUSTER_NAME=$(echo "{{inputs.parameters.cluster}}" | cut -c 9-)
                       export CLUSTER_PROJECT=$(echo "{{inputs.parameters.project}}" | cut -c 9-)
                       export CLUSTER_ZONE=$(echo "{{inputs.parameters.zone}}" | cut -c 6-)
