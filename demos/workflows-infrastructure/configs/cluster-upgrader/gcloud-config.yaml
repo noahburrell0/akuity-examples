@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: gcloud-config
 data:
-  mygcloud: |
+  active_config: |
     [auth]
     credential_file_override = /certs/svc_account.json
