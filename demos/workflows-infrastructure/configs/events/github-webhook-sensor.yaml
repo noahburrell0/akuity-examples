@@ -39,6 +39,10 @@ spec:
           type: string
           value:
             - "project/.*"
+        - path: 'body.issue.labels.#(name%"zone*").name'
+          type: string
+          value:
+            - "zone/.*"
   triggers:
     - template:
         name: upgrade-cluster-trigger
@@ -61,6 +65,22 @@ spec:
               dependencyName: github-cluster-upgrade-issue
               dataKey: body.issue.number
             dest: spec.arguments.parameters.2.value
+          - src:
+              dependencyName: github-cluster-upgrade-issue
+              dataKey: body.issue.title
+            dest: spec.arguments.parameters.3.value
+          - src:
+              dependencyName: github-cluster-upgrade-issue
+              dataKey: body.issue.labels.#(name%"cluster*").name
+            dest: spec.arguments.parameters.4.value
+          - src:
+              dependencyName: github-cluster-upgrade-issue
+              dataKey: body.issue.labels.#(name%"project*").name
+            dest: spec.arguments.parameters.5.value
+          - src:
+              dependencyName: github-cluster-upgrade-issue
+              dataKey: body.issue.labels.#(name%"zone*").name
+            dest: spec.arguments.parameters.6.value
 
           source:
             resource:
@@ -71,6 +91,10 @@ spec:
                 namespace: cluster-upgrader
               spec:
                 entrypoint: main
+                volumes:
+                - name: gcloud-service-account
+                  secret:
+                    secretName: cluster-upgrade-secret
                 ttlStrategy:
                   secondsAfterCompletion: 7200
                 arguments:
@@ -86,6 +110,8 @@ spec:
                   - name: cluster
                     value: PLACEHOLDER
                   - name: project
+                    value: PLACEHOLDER
+                  - name: zone
                     value: PLACEHOLDER
                 templates:
                 - name: main
@@ -201,10 +227,32 @@ spec:
                     body: '{"body":"{{inputs.parameters.comment}}"}'
 
                 - name: pre-checks
+                  inputs:
+                    parameters:
+                    - name: cluster
+                    - name: project
+                    - name: zone
                   container:
                     image: google/cloud-sdk:458.0.1
-                    command: [gcloud]
-                    args: ["version"]
+                    volumeMounts:
+                    - name: gcloud-service-account
+                      mountPath: "/certs"
+                    command:
+                    - "/bin/bash"
+                    - "-c"
+                    - |
+                      set -xe
+                      export CLOUDSDK_CONFIG=/config/mygcloud
+                      export CLUSTER_NAME=$(echo "{{inputs.parameters.cluster}}" | cut -c 9-)
+                      export CLUSTER_PROJECT=$(echo "{{inputs.parameters.project}}" | cut -c 9-)
+                      export CLUSTER_ZONE=$(echo "{{inputs.parameters.project}}" | cut -c 6-)
+
+                      touch /config/mygcloud
+                      :> /config/mygcloud
+                      echo "[auth]" >> /config/mygcloud
+                      echo "credential_file_override = /certs/svc_account.json" >> /config/mygcloud
+
+                      gcloud container clusters describe ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT}
 
                 - name: upgrade-cluster
                   inputs:
@@ -212,6 +260,7 @@ spec:
                     - name: version
                     - name: cluster
                     - name: project
+                    - name: zone
                   container:
                     image: docker/whalesay
                     command: [cowsay]
@@ -223,6 +272,7 @@ spec:
                     - name: version
                     - name: cluster
                     - name: project
+                    - name: zone
                   container:
                     image: docker/whalesay
                     command: [cowsay]
