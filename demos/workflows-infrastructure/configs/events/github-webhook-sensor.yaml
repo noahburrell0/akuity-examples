@@ -139,7 +139,7 @@ spec:
                         - name: issue
                           value: "{{workflow.parameters.issue}}"
                         - name: comment
-                          value: REPLACE ME PRECHECKS FAILED
+                          value: ":x: Pre-checks failed. The workflow was unable to get information about the selected cluster. The upgrade has been aborted."
                     - name: pre-checks-succeeded
                       depends: "pre-checks.Succeeded"
                       template: add-comment
@@ -152,7 +152,7 @@ spec:
                         - name: issue
                           value: "{{workflow.parameters.issue}}"
                         - name: comment
-                          value: REPLACE ME PRECHECKS SUCCEEDED
+                          value: ":rocket: Pre-checks succeeded. The workflow was able to get the cluster. Proceeding with the upgrade."
                     - name: upgrade-cluster
                       depends: "pre-checks-succeeded.Succeeded"
                       template: upgrade-cluster
