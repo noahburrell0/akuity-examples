@@ -71,6 +71,8 @@ spec:
                 namespace: cluster-upgrader
               spec:
                 entrypoint: main
+                ttlStrategy:
+                  secondsAfterCompletion: 7200
                 arguments:
                   parameters:
                   - name: repo-owner
