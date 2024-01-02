@@ -97,7 +97,7 @@ spec:
                     secretName: cluster-upgrade-secret
                 - name: gcloud-config
                   configMap:
-                    configMapName: gcloud-config
+                    name: gcloud-config
                 ttlStrategy:
                   secondsAfterCompletion: 7200
                 arguments:
