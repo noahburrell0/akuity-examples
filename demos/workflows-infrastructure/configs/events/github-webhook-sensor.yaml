@@ -119,6 +119,14 @@ spec:
                     tasks:
                     - name: pre-checks
                       template: pre-checks
+                      arguments:
+                        parameters:
+                        - name: cluster
+                          value: "{{workflow.parameters.cluster}}"
+                        - name: project
+                          value: "{{workflow.parameters.project}}"
+                        - name: zone
+                          value: "{{workflow.parameters.zone}}"
                     - name: pre-checks-failed
                       depends: "pre-checks.Failed"
                       template: add-comment
@@ -156,6 +164,8 @@ spec:
                           value: "{{workflow.parameters.cluster}}"
                         - name: project
                           value: "{{workflow.parameters.project}}"
+                        - name: zone
+                          value: "{{workflow.parameters.zone}}"
                     - name: validate-upgrade
                       depends: "upgrade-cluster.Succeeded"
                       template: validate-upgrade
@@ -167,6 +177,8 @@ spec:
                           value: "{{workflow.parameters.cluster}}"
                         - name: project
                           value: "{{workflow.parameters.project}}"
+                        - name: zone
+                          value: "{{workflow.parameters.zone}}"
                     - name: validate-upgrade-failed
                       depends: "validate-upgrade.Failed"
                       template: add-comment
