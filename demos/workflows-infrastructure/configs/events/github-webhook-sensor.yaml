@@ -200,9 +200,9 @@ spec:
 
                 - name: pre-checks
                   container:
-                    image: docker/whalesay
-                    command: [cowsay]
-                    args: ["Moo"]
+                    image: google/cloud-sdk:458.0.1
+                    command: [gcloud]
+                    args: ["version"]
 
                 - name: upgrade-cluster
                   inputs:
