@@ -204,7 +204,7 @@ spec:
                         - name: issue
                           value: "{{workflow.parameters.issue}}"
                         - name: comment
-                          value: REPLACE ME VALIDATE UPGRADE FAILED
+                          value: ":x: Validation was unsuccessful. Either the current master version, current node version, or a nodepool does not match the desired version of {{workflow.parameters.version}}. See the workflow logs for details."
                     - name: validate-upgrade-succeeded
                       depends: "validate-upgrade.Succeeded"
                       template: add-comment
@@ -217,7 +217,7 @@ spec:
                         - name: issue
                           value: "{{workflow.parameters.issue}}"
                         - name: comment
-                          value: "REPLACE ME VALIDATE UPGRADE SUCCEEDED"
+                          value: ":white_check_mark: Version {{workflow.parameters.version}} is being reported across all nodes. Validation successful!"
                     - name: close-issue
                       depends: "validate-upgrade-succeeded.Succeeded"
                       template: close-issue
@@ -333,7 +333,40 @@ spec:
                       export CLUSTER_PROJECT=$(echo "{{inputs.parameters.project}}" | cut -c 9-)
                       export CLUSTER_ZONE=$(echo "{{inputs.parameters.zone}}" | cut -c 6-)
 
-                      gcloud container clusters describe ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT}
+                      apt update && apt install -y wget
+                      wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +x ./yq
+
+                      CLUSTER_DESCRIPTION=$(gcloud container clusters describe ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT})
+
+                      CUR_MASTER_VERS=$(echo "${CLUSTER_DESCRIPTION}" | ./yq e '.currentMasterVersion')
+                      CUR_NODE_VERS=$(echo "${CLUSTER_DESCRIPTION}" | ./yq e '.currentNodeVersion')
+
+                      if [ "${CUR_MASTER_VERS}" == "${CLUSTER_VERSION}" ]; then
+                          echo "Current master version matches!"
+                      else
+                          echo "Current master version does not match!"
+                          exit 1
+                      fi
+
+                      if [ "${CUR_MASTER_VERS}" == "${CLUSTER_VERSION}" ]; then
+                          echo "Current node version matches!"
+                      else
+                          echo "Current node version does not match!"
+                          exit 1
+                      fi
+
+                      readarray nodePools < <( echo "${CLUSTER_DESCRIPTION}" | ./yq e -o=j -I=0 '.nodePools[]' )
+                      for nodePool in "${nodePools[@]}"; do
+                          nodePoolName=$(echo "$nodePool" | ./yq e '.name' -)
+                          nodePoolVersion=$(echo "$nodePool" | ./yq e '.version' -)
+
+                          if [ "${nodePoolVersion}" == "${CLUSTER_VERSION}" ]; then
+                              echo "${nodePoolName} nodepool version matches!"
+                          else
+                              echo "${nodePoolName} nodepool version does not match!"
+                              exit 1
+                          fi
+                      done
 
                 - name: close-issue
                   inputs:
