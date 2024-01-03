@@ -284,16 +284,15 @@ spec:
                       export CLUSTER_PROJECT=$(echo "{{inputs.parameters.project}}" | cut -c 9-)
                       export CLUSTER_ZONE=$(echo "{{inputs.parameters.zone}}" | cut -c 6-)
 
-                      apt-get update
-                      apt-get install -y yq
+                      wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +x ./yq
 
                       # Upgrade master
                       gcloud container clusters upgrade ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT} --cluster-version="${CLUSTER_VERSION}" --master --quiet
 
                       # Upgrade nodepools
-                      readarray nodePools < <( gcloud container clusters describe ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT} | yq e -o=j -I=0 '.nodePools[]' )
+                      readarray nodePools < <( gcloud container clusters describe ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT} | ./yq e -o=j -I=0 '.nodePools[]' )
                       for nodePool in "${nodePools[@]}"; do
-                          nodePoolName=$(echo "$nodePool" | yq e '.name' -)
+                          nodePoolName=$(echo "$nodePool" | ./yq e '.name' -)
                           gcloud container clusters upgrade ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT} --cluster-version="${CLUSTER_VERSION}" --node-pool="${nodePoolName}" --quiet
                       done
 
