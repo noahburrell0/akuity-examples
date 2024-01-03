@@ -284,6 +284,7 @@ spec:
                       export CLUSTER_PROJECT=$(echo "{{inputs.parameters.project}}" | cut -c 9-)
                       export CLUSTER_ZONE=$(echo "{{inputs.parameters.zone}}" | cut -c 6-)
 
+                      apt update && apt install -y wget
                       wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +x ./yq
 
                       # Upgrade master
