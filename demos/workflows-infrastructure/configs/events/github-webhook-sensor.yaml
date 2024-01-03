@@ -279,12 +279,20 @@ spec:
                     - |
                       set -xe
                       export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=/certs/svc_account.json
-                      export CLUSTER_VERSION=$(echo "{{inputs.parameters.version}}" | cut -c 9-)
+                      export CLUSTER_VERSION=$(echo "{{inputs.parameters.version}}")
                       export CLUSTER_NAME=$(echo "{{inputs.parameters.cluster}}" | cut -c 9-)
                       export CLUSTER_PROJECT=$(echo "{{inputs.parameters.project}}" | cut -c 9-)
                       export CLUSTER_ZONE=$(echo "{{inputs.parameters.zone}}" | cut -c 6-)
 
-                      gcloud container clusters describe ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT}
+                      # Upgrade master
+                      gcloud container clusters upgrade ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT} --cluster-version="${CLUSTER_VERSION}" --master
+
+                      # Upgrade nodepools
+                      readarray nodePools < <( gcloud container clusters describe upgrade-demo --zone us-central1-a --project akuity-training | yq e -o=j -I=0 '.nodePools[]' )
+                      for nodePool in "${nodePools[@]}"; do
+                          nodePoolName=$(echo "$nodePool" | yq e '.name' -)
+                          gcloud container clusters upgrade ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT} --cluster-version="${CLUSTER_VERSION}" --node-pool=${nodePoolName}
+                      done
 
                 - name: validate-upgrade
                   inputs:
@@ -304,7 +312,7 @@ spec:
                     - |
                       set -xe
                       export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=/certs/svc_account.json
-                      export CLUSTER_VERSION=$(echo "{{inputs.parameters.version}}" | cut -c 9-)
+                      export CLUSTER_VERSION=$(echo "{{inputs.parameters.version}}")
                       export CLUSTER_NAME=$(echo "{{inputs.parameters.cluster}}" | cut -c 9-)
                       export CLUSTER_PROJECT=$(echo "{{inputs.parameters.project}}" | cut -c 9-)
                       export CLUSTER_ZONE=$(echo "{{inputs.parameters.zone}}" | cut -c 6-)
