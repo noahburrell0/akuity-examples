@@ -166,6 +166,19 @@ spec:
                           value: "{{workflow.parameters.project}}"
                         - name: zone
                           value: "{{workflow.parameters.zone}}"
+                    - name: upgrade-cluster-failed
+                      depends: "upgrade-cluster.Failed"
+                      template: add-comment
+                      arguments:
+                        parameters:
+                        - name: repo-owner
+                          value: "{{workflow.parameters.repo-owner}}"
+                        - name: repo
+                          value: "{{workflow.parameters.repo}}"
+                        - name: issue
+                          value: "{{workflow.parameters.issue}}"
+                        - name: comment
+                          value: ":x: An error occurred while upgrading the cluster. Please check the workflow logs for further details."
                     - name: validate-upgrade
                       depends: "upgrade-cluster.Succeeded"
                       template: validate-upgrade
