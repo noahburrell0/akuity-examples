@@ -285,13 +285,13 @@ spec:
                       export CLUSTER_ZONE=$(echo "{{inputs.parameters.zone}}" | cut -c 6-)
 
                       # Upgrade master
-                      gcloud container clusters upgrade ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT} --cluster-version="${CLUSTER_VERSION}" --master
+                      gcloud container clusters upgrade ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT} --cluster-version="${CLUSTER_VERSION}" --master --quiet 
 
                       # Upgrade nodepools
                       readarray nodePools < <( gcloud container clusters describe ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT} | yq e -o=j -I=0 '.nodePools[]' )
                       for nodePool in "${nodePools[@]}"; do
                           nodePoolName=$(echo "$nodePool" | yq e '.name' -)
-                          gcloud container clusters upgrade ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT} --cluster-version="${CLUSTER_VERSION}" --node-pool="${nodePoolName}"
+                          gcloud container clusters upgrade ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT} --cluster-version="${CLUSTER_VERSION}" --node-pool="${nodePoolName}" --quiet
                       done
 
                 - name: validate-upgrade
