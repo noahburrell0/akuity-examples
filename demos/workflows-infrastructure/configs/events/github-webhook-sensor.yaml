@@ -269,9 +269,22 @@ spec:
                     - name: project
                     - name: zone
                   container:
-                    image: docker/whalesay
-                    command: [cowsay]
-                    args: ["Moo"]
+                    image: google/cloud-sdk:458.0.1
+                    volumeMounts:
+                    - name: gcloud-service-account
+                      mountPath: "/certs"
+                    command:
+                    - "/bin/bash"
+                    - "-c"
+                    - |
+                      set -xe
+                      export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=/certs/svc_account.json
+                      export CLUSTER_VERSION=$(echo "{{inputs.parameters.version}}" | cut -c 9-)
+                      export CLUSTER_NAME=$(echo "{{inputs.parameters.cluster}}" | cut -c 9-)
+                      export CLUSTER_PROJECT=$(echo "{{inputs.parameters.project}}" | cut -c 9-)
+                      export CLUSTER_ZONE=$(echo "{{inputs.parameters.zone}}" | cut -c 6-)
+
+                      gcloud container clusters describe ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT}
 
                 - name: validate-upgrade
                   inputs:
@@ -281,9 +294,22 @@ spec:
                     - name: project
                     - name: zone
                   container:
-                    image: docker/whalesay
-                    command: [cowsay]
-                    args: ["Moo"]
+                    image: google/cloud-sdk:458.0.1
+                    volumeMounts:
+                    - name: gcloud-service-account
+                      mountPath: "/certs"
+                    command:
+                    - "/bin/bash"
+                    - "-c"
+                    - |
+                      set -xe
+                      export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=/certs/svc_account.json
+                      export CLUSTER_VERSION=$(echo "{{inputs.parameters.version}}" | cut -c 9-)
+                      export CLUSTER_NAME=$(echo "{{inputs.parameters.cluster}}" | cut -c 9-)
+                      export CLUSTER_PROJECT=$(echo "{{inputs.parameters.project}}" | cut -c 9-)
+                      export CLUSTER_ZONE=$(echo "{{inputs.parameters.zone}}" | cut -c 6-)
+
+                      gcloud container clusters describe ${CLUSTER_NAME} --zone ${CLUSTER_ZONE} --project ${CLUSTER_PROJECT}
 
                 - name: close-issue
                   inputs:
