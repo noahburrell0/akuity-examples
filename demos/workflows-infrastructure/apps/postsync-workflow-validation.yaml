@@ -25,7 +25,7 @@ spec:
           - CreateNamespace=true
       source:
         path: demos/workflows-infrastructure/configs/postsync-workflow-validation
-        repoURL: https://github.com/noahburrell0/akuity-examples.git
+        repoURL: https://github.com/dhpup/akuity-examples.git
         targetRevision: main
         kustomize:
           patches:

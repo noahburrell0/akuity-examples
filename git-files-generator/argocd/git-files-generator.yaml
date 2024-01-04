@@ -9,7 +9,7 @@ spec:
     - matrix:
         generators:
           - git:
-              repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+              repoURL: 'https://github.com/dhpup/akuity-examples.git'
               revision: HEAD
               files:
               - path: git-files-generator/configs/prod-config.yaml
@@ -19,7 +19,7 @@ spec:
     - matrix:
         generators:
           - git:
-              repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+              repoURL: 'https://github.com/dhpup/akuity-examples.git'
               revision: HEAD
               files:
               - path: git-files-generator/configs/non-prod-config.yaml

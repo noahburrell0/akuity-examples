@@ -10,7 +10,7 @@ spec:
       - CreateNamespace=true
   source:
     path: demos/workflows-infrastructure/configs/events
-    repoURL: https://github.com/noahburrell0/akuity-examples.git
+    repoURL: https://github.com/dhpup/akuity-examples.git
     targetRevision: main
   destination:
     name: demo1
