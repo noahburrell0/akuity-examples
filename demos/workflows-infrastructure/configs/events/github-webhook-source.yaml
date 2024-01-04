@@ -5,11 +5,11 @@ metadata:
 spec:
   service:
     ports:
-      - port: 30100
-        targetPort: 30100
+      - port: 30004
+        targetPort: 30004
   webhook:
     github:
-      port: "30100"
+      port: "30004"
       endpoint: /github
       method: POST
 ---
@@ -19,10 +19,10 @@ metadata:
   name: github-webhook-eventsource
 spec:
   ports:
-  - port: 30100
+  - port: 30004
     protocol: TCP
-    targetPort: 30100
-    nodePort: 30100
+    targetPort: 30004
+    nodePort: 30004
   selector:
     eventsource-name: github-webhook-source
   type: NodePort
