@@ -15,3 +15,6 @@ akuity argocd cluster get-agent-manifests ${CLUSTER} --org-name ${ORG} --instanc
 akuity argocd apply -f app-of-apps.yaml --org-name ${ORG} --name ${INSTANCE}
 
 echo "\nMake sure sync your apps and create gcpsm-secret in the external-secrets namespace."
+
+
+http://72.48.68.159:30004/github
