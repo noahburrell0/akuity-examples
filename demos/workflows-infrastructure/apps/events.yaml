@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: events
+  namespace: argocd
+spec:
+  project: demo-workflows-infrastructure
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    path: demos/workflows-infrastructure/configs/events
+    repoURL: https://github.com/noahburrell0/akuity-examples.git
+    targetRevision: main
+  destination:
+    name: demo1
+    namespace: argo-events
