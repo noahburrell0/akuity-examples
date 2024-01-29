@@ -5,7 +5,10 @@ metadata:
 spec:
   project: default
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
+    syncOptions:
+    - CreateNamespace=true
   source:
     repoURL: https://github.com/noahburrell0/akuity-examples.git
     targetRevision: main
