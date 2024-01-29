@@ -35,5 +35,6 @@ jobs:
             /usr/bin/git config --global url."https://${GH_TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
             /usr/bin/git config --global user.name "Akuity Bot"
             /usr/bin/git config --global user.email "akuitybot@akuity.io"
+            /usr/bin/git add -A
             /usr/bin/git commit -m "Update project name"
             /usr/bin/git push -u origin main
