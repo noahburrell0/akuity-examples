@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: app-of-apps-project-quickstart
 spec:
-  project: default
+  project: project-onboarding
   syncPolicy:
     automated:
       prune: true
