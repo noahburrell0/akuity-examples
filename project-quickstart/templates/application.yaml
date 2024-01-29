@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: REPLACE_ME_NAME
 spec:
-  project: default
+  project: project-onboarding
   syncPolicy:
     automated:
       prune: true
