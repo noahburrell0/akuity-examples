@@ -7,6 +7,8 @@ spec:
   syncPolicy:
     automated:
       prune: true
+    syncOptions:
+    - CreateNamespace=true
   source:
     repoURL: REPLACE_ME_REPO
     targetRevision: main
