@@ -5,7 +5,8 @@ metadata:
 spec:
   project: default
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
   source:
     repoURL: REPLACE_ME_REPO
     targetRevision: main
