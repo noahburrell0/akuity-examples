@@ -28,7 +28,7 @@ jobs:
         run: |
             sed -i "s/REPLACE_ME_NAME/guestbook-${{ inputs.projectName }}/g" argocd-project-${{ inputs.projectName }}/apps/guestbook.yaml
             sed -i "s/REPLACE_ME_PROJECT/${{ inputs.projectName }}/g" argocd-project-${{ inputs.projectName }}/apps/guestbook.yaml
-            sed -i "s/REPLACE_ME_REPO/https://github.com/${{ inputs.templateRepoOrg }}/argocd-project-${{ inputs.projectName }}.git/g" argocd-project-${{ inputs.projectName }}/apps/guestbook.yaml
+            sed -i "s/REPLACE_ME_REPO/https:\/\/github.com\/${{ inputs.templateRepoOrg }}\/argocd-project-${{ inputs.projectName }}.git/g" argocd-project-${{ inputs.projectName }}/apps/guestbook.yaml
       - name: Setup git and push changes
         run: |
             cd argocd-project-${{ inputs.projectName }}
