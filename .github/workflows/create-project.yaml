@@ -17,5 +17,5 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
-      - run: gh repo create argocd-project-${{ inputs.projectName }} --template ${{ inputs.templateRepo }} --clone
+      - run: gh repo create argocd-project-${{ inputs.projectName }} --template ${{ inputs.templateRepo }} --clone --public
       - run: ls -al
