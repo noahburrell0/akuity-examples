@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps-project-quickstart
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+  source:
+    repoURL: https://github.com/noahburrell0/akuity-examples.git
+    targetRevision: main
+    path: project-quickstart/argocd
+    directory:
+      recurse: true
+  destination:
+    name: in-cluster
+    namespace: argocd
