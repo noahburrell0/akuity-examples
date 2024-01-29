@@ -6,16 +6,34 @@ on:
         description: The name of the new project to create.
         required: true
         type: string
-      templateRepo:
-        description: The template repository to clone from.
+      templateRepoOrg:
+        description: The organization of the template repository to clone from.
         required: true
         type: string
-        default: noahburrell0/project-template
+        default: noahburrell0
+      templateRepoName:
+        description: The name of the template repository to clone from.
+        required: true
+        type: string
+        default: project-template
 jobs:
   clone-template-repo:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
-      - run: gh repo create argocd-project-${{ inputs.projectName }} --template ${{ inputs.templateRepo }} --clone --public
-      - run: ls -al
+      - name: Create repo from template
+        run: gh repo create argocd-project-${{ inputs.projectName }} --template ${{ inputs.templateRepoOrg }}/${{ inputs.templateRepoName }} --clone --public
+      - name: Find/replace project name
+        run: |
+            sed -i "s/REPLACE_ME_NAME/guestbook-${{ inputs.projectName }}/g" argocd-project-${{ inputs.projectName }}/apps/guestbook.yaml
+            sed -i "s/REPLACE_ME_PROJECT/${{ inputs.projectName }}/g" argocd-project-${{ inputs.projectName }}/apps/guestbook.yaml
+            sed -i "s/REPLACE_ME_REPO/https://github.com/${{ inputs.templateRepoOrg }}/argocd-project-${{ inputs.projectName }}.git/g" argocd-project-${{ inputs.projectName }}/apps/guestbook.yaml
+      - name: Setup git and push changes
+        run: |
+            cd argocd-project-${{ inputs.projectName }}
+            /usr/bin/git config --global url."https://${GH_TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+            /usr/bin/git config --global user.name "Akuity Bot"
+            /usr/bin/git config --global user.email "akuitybot@akuity.io"
+            /usr/bin/git commit -m "Update project name"
+            /usr/bin/git push -u origin main
