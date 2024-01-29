@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps-proj-a
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+  source:
+    repoURL: https://github.com/noahburrell0/argocd-project-proj-a.git
+    targetRevision: main
+    path: apps
+    directory:
+      recurse: true
+  destination:
+    name: in-cluster
+    namespace: argocd
