@@ -10,7 +10,7 @@ on:
         description: The organization of the template repository to clone from.
         required: true
         type: string
-        default: noahburrell0
+        default: dhpup
       templateRepoName:
         description: The name of the template repository to clone from.
         required: true
