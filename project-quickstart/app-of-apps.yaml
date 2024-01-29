@@ -7,7 +7,7 @@ spec:
   syncPolicy:
     automated:
       prune: true
-    allowEmpty: true
+      allowEmpty: true
     syncOptions:
     - CreateNamespace=true
   source:
