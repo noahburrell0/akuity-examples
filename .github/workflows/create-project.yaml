@@ -31,6 +31,7 @@ jobs:
             sed -i "s/REPLACE_ME_REPO/https:\/\/github.com\/${{ inputs.templateRepoOrg }}\/argocd-project-${{ inputs.projectName }}.git/g" argocd-project-${{ inputs.projectName }}/apps/guestbook.yaml
       - name: Setup git and push changes
         run: |
+            cd argocd-project-${{ inputs.projectName }}
             /usr/bin/git config --global url."https://${GH_TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
             /usr/bin/git config --global user.name "Akuity Bot"
             /usr/bin/git config --global user.email "akuitybot@akuity.io"
@@ -54,7 +55,6 @@ jobs:
             sed -i "s/REPLACE_ME_PROJECT/${{ inputs.projectName }}/g" project-quickstart/argocd/projects/${{ inputs.projectName }}.yaml
       - name: Setup git and push changes
         run: |
-            cd argocd-project-${{ inputs.projectName }}
             /usr/bin/git config --global url."https://${GH_TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
             /usr/bin/git config --global user.name "Akuity Bot"
             /usr/bin/git config --global user.email "akuitybot@akuity.io"
