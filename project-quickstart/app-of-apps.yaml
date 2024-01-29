@@ -9,7 +9,7 @@ spec:
       prune: true
       allowEmpty: true
   source:
-    repoURL: https://github.com/noahburrell0/akuity-examples.git
+    repoURL: https://github.com/dhpup/akuity-examples.git
     targetRevision: main
     path: project-quickstart/argocd
     directory:
