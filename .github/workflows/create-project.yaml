@@ -6,8 +6,14 @@ on:
         description: The name of the new project to create.
         required: true
         type: string
+      templateRepo:
+        description: The template repository to clone from.
+        required: true
+        type: string
+        default: noahburrell0/project-template
 jobs:
   clone-template-repo:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ inputs.projectName }}"
+      - run: gh repo create argocd-project-${{ inputs.projectName }} --template ${{ inputs.templateRepo }} --clone
+      - run: ls -al
