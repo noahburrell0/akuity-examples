@@ -3,6 +3,8 @@ kind: AppProject
 metadata:
   name: REPLACE_ME_PROJECT
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   sourceRepos:
   - '*'
