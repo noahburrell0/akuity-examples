@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps-tst5
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+  source:
+    repoURL: https://github.com/noahburrell0/argocd-project-tst5.git
+    targetRevision: main
+    path: apps
+    directory:
+      recurse: true
+  destination:
+    name: in-cluster
+    namespace: argocd
