@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bootstrapping-rollouts
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - clusters: {}
+  template:
+    metadata:
+      name: 'bootstrapping-rollouts-{{.name}}'
+    spec:
+      destination:
+        namespace: 'argo-rollouts'
+        name: '{{.name}}'
+      project: default
+      source:
+        repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+        path: 'bootstrapping/configs/rollouts'
+        targetRevision: 'main'
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
