@@ -6,7 +6,13 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - clusters: {}
+  - clusters:
+      selector:
+        matchExpressions:
+         - key: akuity.io/argo-cd-cluster-name
+           operator: NotIn
+           values:
+             - "in-cluster"
   template:
     metadata:
       name: 'bootstrapping-rollouts-{{.name}}'
