@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bootstrapping-workflows
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - clusters:
+      selector:
+        matchExpressions:
+         - key: akuity.io/argo-cd-cluster-name
+           operator: NotIn
+           values:
+             - "in-cluster"
+             - "demo1"
+  template:
+    metadata:
+      name: 'bootstrapping-workflows-{{.name}}'
+    spec:
+      destination:
+        namespace: 'argo'
+        name: '{{.name}}'
+      project: default
+      source:
+        repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+        path: 'bootstrapping/configs/workflows'
+        targetRevision: 'main'
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
