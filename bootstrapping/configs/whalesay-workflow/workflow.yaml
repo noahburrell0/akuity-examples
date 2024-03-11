@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   name: whalesay
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   serviceAccountName: workflows
   entrypoint: whalesay
