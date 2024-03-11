@@ -1,10 +1,8 @@
 apiVersion: v1
-kind: Secret
+kind: ServiceAccount
 metadata:
   name: workflows
-  annotations:
-    kubernetes.io/service-account.name: workflows
-type: kubernetes.io/service-account-token
+automountServiceAccountToken: true
 
 ---
 
