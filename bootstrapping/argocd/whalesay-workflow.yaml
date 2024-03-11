@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bootstrapping-whalesay-workflow
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - clusters:
+      selector:
+        matchExpressions:
+         - key: akuity.io/argo-cd-cluster-name
+           operator: NotIn
+           values:
+             - "in-cluster"
+             - "demo1"
+  template:
+    metadata:
+      name: 'bootstrapping-whalesay-workflow-{{.name}}'
+    spec:
+      destination:
+        namespace: 'whalesay-workflow'
+        name: '{{.name}}'
+      project: bootstrapping
+      source:
+        repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+        path: 'bootstrapping/configs/whalesay-workflow'
+        targetRevision: 'main'
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
