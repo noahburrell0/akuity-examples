@@ -43,7 +43,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/noahburrell0/guestbook-deploy.git
+        repoURL: https://github.com/dhpup/guestbook-deploy.git
         targetRevision: main
         path: env/{{.env}}
       destination:

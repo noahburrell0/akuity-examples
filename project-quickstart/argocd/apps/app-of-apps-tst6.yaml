@@ -11,7 +11,7 @@ spec:
     automated:
       prune: true
   source:
-    repoURL: https://github.com/noahburrell0/argocd-project-tst6.git
+    repoURL: https://github.com/dhpup/argocd-project-tst6.git
     targetRevision: main
     path: apps
     directory:
