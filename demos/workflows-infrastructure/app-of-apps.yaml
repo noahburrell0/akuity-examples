@@ -1,9 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: demo-workflows-infrastructure
+  name: workflows-infrastructure
 spec:
-  project: default
+  project: workflows-infrastructure-demo
   syncPolicy:
     automated: {}
   source:

@@ -4,7 +4,7 @@ metadata:
   name: reloader
   namespace: argocd
 spec:
-  project: demo-workflows-infrastructure
+  project: workflows-infrastructure-demo
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

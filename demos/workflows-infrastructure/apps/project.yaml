@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: demo-workflows-infrastructure
+  name: workflows-infrastructure-demo
   namespace: argocd
 spec:
   sourceRepos:

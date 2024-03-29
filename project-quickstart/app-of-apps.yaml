@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-of-apps-project-quickstart
+  name: project-quickstart
 spec:
   project: project-onboarding
   syncPolicy:

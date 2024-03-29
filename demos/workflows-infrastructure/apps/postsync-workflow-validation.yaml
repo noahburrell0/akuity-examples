@@ -19,7 +19,7 @@ spec:
       labels:
         notifications: "true"
     spec:
-      project: demo-workflows-infrastructure
+      project: workflows-infrastructure-demo
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
