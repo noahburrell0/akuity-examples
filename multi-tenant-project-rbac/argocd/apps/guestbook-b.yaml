@@ -15,5 +15,5 @@ spec:
     targetRevision: HEAD
     path: env/dev
   destination:
-    name: demo1
+    name: mac1
     namespace: guestbook-b

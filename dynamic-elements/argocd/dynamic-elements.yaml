@@ -34,5 +34,5 @@ spec:
           helm:
             releaseName: '{{.releaseName}}'
       destination:
-        name: demo1
+        name: mac1
         namespace: '{{.namespace}}'

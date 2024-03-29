@@ -1,5 +1,5 @@
 clusters:
-- clusterName: demo1
+- clusterName: mac1
   env: dev
-- clusterName: demo1
+- clusterName: mac1
   env: stage

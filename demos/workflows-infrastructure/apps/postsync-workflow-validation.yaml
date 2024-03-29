@@ -47,5 +47,5 @@ spec:
                   path: /spec/ports/0/nodePort
                   value: {{nodePort}}
       destination:
-        name: demo1
+        name: mac1
         namespace: 'postsync-workflow-validation-{{name}}'
