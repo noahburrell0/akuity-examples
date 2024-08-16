@@ -14,7 +14,7 @@ spec:
       - path: git-directory-multicluster-generator/configs/*/*
   template:
     metadata:
-      name: '{{index .path.segments 2}}-{{.path.basename}}'
+      name: '{{.path.basename}}-{{index .path.segments 2}}'
     spec:
       project: "default"
       source:
@@ -22,8 +22,8 @@ spec:
         targetRevision: HEAD
         path: '{{.path.path}}'
       destination:
-        name: '{{index .path.segments 2}}'
-        namespace: '{{index .path.segments 2}}-{{.path.basename}}'
+        name: '{{.path.basename}}'
+        namespace: '{{.path.basename}}-{{index .path.segments 2}}'
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
