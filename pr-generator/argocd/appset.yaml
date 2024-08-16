@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: pr-generator
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - pullRequest:
+      github:
+        owner: noahburrell0
+        repo: akuity-examples
+        tokenRef:
+          secretName: application-set-secret
+          key: github-token
+        # Labels is used to filter the PRs that you want to target. (optional)
+        labels:
+        - preview
+      requeueAfterSeconds: 15
+  template:
+    metadata:
+      name: 'pr-generator-{{.branch}}-{{.number}}'
+    spec:
+      source:
+        repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+        targetRevision: '{{.head_sha}}'
+        path: pr-generator/configs
+      project: "default"
+      destination:
+        name: demo1
+        namespace: pr-generator
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
