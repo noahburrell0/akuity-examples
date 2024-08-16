@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: app-of-apps-pr-generator
 spec:
-  project: default
+  project: generator-demo
   syncPolicy:
     automated: {}
   source:
