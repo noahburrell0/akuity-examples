@@ -8,7 +8,7 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
   - git:
-      repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+      repoURL: 'https://github.com/dhpup/akuity-examples.git'
       revision: HEAD
       directories:
       - path: git-directory-multicluster-generator/configs/*/*
@@ -18,7 +18,7 @@ spec:
     spec:
       project: "default"
       source:
-        repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+        repoURL: 'https://github.com/dhpup/akuity-examples.git'
         targetRevision: HEAD
         path: '{{.path.path}}'
       destination:

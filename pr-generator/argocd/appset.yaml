@@ -8,7 +8,7 @@ spec:
   generators:
   - pullRequest:
       github:
-        owner: noahburrell0
+        owner: dhpup
         repo: akuity-examples
         tokenRef:
           secretName: application-set-secret
@@ -22,12 +22,12 @@ spec:
       name: 'pr-generator-{{.branch}}-{{.number}}'
     spec:
       source:
-        repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+        repoURL: 'https://github.com/dhpup/akuity-examples.git'
         targetRevision: '{{.head_sha}}'
         path: pr-generator/configs
       project: "default"
       destination:
-        name: demo1
+        name: mac2
         namespace: pr-generator
       syncPolicy:
         syncOptions:
