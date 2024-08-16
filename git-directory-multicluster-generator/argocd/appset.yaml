@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: git-directory-multicluster-generator
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+      revision: HEAD
+      directories:
+      - path: git-directory-multicluster-generator/configs/*/*
+  template:
+    metadata:
+      name: '{{index .path.segments 2}}-{{.path.basename}}'
+    spec:
+      project: "default"
+      source:
+        repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
+        targetRevision: HEAD
+        path: '{{.path.path}}'
+      destination:
+        name: '{{index .path.segments 2}}'
+        namespace: '{{index .path.segments 2}}-{{.path.basename}}'
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
