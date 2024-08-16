@@ -9,7 +9,7 @@ spec:
   - pullRequest:
       github:
         owner: noahburrell0
-        repo: https://github.com/noahburrell0/akuity-examples.git
+        repo: akuity-examples
         tokenRef:
           secretName: application-set-secret
           key: github-token
@@ -22,7 +22,7 @@ spec:
       name: 'pr-generator-{{.branch}}-{{.number}}'
     spec:
       source:
-        repoURL: 'https://github.com/myorg/myrepo.git'
+        repoURL: 'https://github.com/noahburrell0/akuity-examples.git'
         targetRevision: '{{.head_sha}}'
         path: pr-generator/configs
       project: "default"
